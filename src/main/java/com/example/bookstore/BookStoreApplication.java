@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class BookStoreApplication {
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(BookStoreApplication.class, args);
