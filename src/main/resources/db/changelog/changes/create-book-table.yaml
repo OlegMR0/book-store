@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_books_table
+      author: name
+      changes:
+        - createTable:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: title
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: isbn
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: price
+                  type: decimal(10,0)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(45)
+              - column:
+                  name: coverImage
+                  type: varchar(45)
