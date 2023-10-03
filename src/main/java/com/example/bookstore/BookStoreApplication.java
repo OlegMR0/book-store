@@ -1,6 +1,5 @@
 package com.example.bookstore;
 
-import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,7 +21,7 @@ public class BookStoreApplication {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                Book book = new Book();
+                System.out.println(bookRepository.findAll());
             }
         };
     }

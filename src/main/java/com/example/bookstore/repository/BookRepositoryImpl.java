@@ -46,7 +46,7 @@ public class BookRepositoryImpl implements BookRepository {
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            Query<Book> query = session.createQuery("FROM book", Book.class);
+            Query<Book> query = session.createQuery("FROM Book ", Book.class);
             List<Book> list = query.list();
             transaction.commit();
             return list;

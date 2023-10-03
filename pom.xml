@@ -56,6 +56,14 @@
             <artifactId>liquibase-maven-plugin</artifactId>
             <version>4.22.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
