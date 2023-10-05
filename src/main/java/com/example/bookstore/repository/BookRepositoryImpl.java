@@ -2,10 +2,8 @@ package com.example.bookstore.repository;
 
 import com.example.bookstore.exception.DataAccessException;
 import com.example.bookstore.model.Book;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
