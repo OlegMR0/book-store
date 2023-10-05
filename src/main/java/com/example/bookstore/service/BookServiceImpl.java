@@ -5,10 +5,8 @@ import com.example.bookstore.dto.CreateBookRequestDto;
 import com.example.bookstore.dto.mapper.BookMapper;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.BookRepository;
-import java.util.List;
-import java.util.Optional;
-
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +19,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto save(CreateBookRequestDto book) {
-        Book savedBook = bookRepository.save(bookMapper.toModel(book));
-        return bookMapper.toDto(savedBook);
+        Book model = bookMapper.toModel(book);
+        return bookMapper.toDto(bookRepository.save(model));
     }
 
     @Override
@@ -39,8 +37,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto findById(Long id) {
-        return bookMapper.toDto(bookRepository.findById(id).orElseThrow(EntityNotFoundException::new));
+        return bookMapper.toDto(bookRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new));
     }
-
-
 }
