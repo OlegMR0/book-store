@@ -2,7 +2,10 @@ package com.example.bookstore.repository;
 
 import com.example.bookstore.exception.DataAccessException;
 import com.example.bookstore.model.Book;
+
 import java.util.List;
+import java.util.Optional;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -37,6 +40,35 @@ public class BookRepositoryImpl implements BookRepository {
                 session.close();
             }
         }
+    }
+
+    @Override
+    public Book getById(Long id) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            Query<Book> query = session.createQuery("FROM Book WHERE id = :id", Book.class);
+            query.setParameter("id", id);
+            Book book = query.getSingleResult();
+            transaction.commit();
+            return book;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataAccessException("Can't get a book with id " + id, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public Optional<Book> findById(Long id) {
+        return Optional.ofNullable(getById(id));
     }
 
     @Override
