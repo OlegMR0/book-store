@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
 
-    @GetMapping()
+    @GetMapping
     public List<BookDto> getAll() {
         return bookService.findAll();
     }
@@ -28,10 +28,8 @@ public class BookController {
         return bookService.findById(id);
     }
 
-    //TODO POST doesn't work
-    @PostMapping()
+    @PostMapping
     public BookDto createBook(@RequestBody CreateBookRequestDto bookDto) {
         return bookService.save(bookDto);
     }
-
 }
