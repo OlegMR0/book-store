@@ -2,6 +2,7 @@ package com.example.bookstore.controller;
 
 import com.example.bookstore.dto.BookDto;
 import com.example.bookstore.dto.CreateBookRequestDto;
+import com.example.bookstore.repository.book.BookSearchParameters;
 import com.example.bookstore.service.BookService;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,10 @@ public class BookController {
         return bookService.findById(id);
     }
 
+    @GetMapping("/search")
+    public List<BookDto> search(BookSearchParameters searchParameters) {
+        return bookService.search(searchParameters);
+    }
     @PostMapping
     public BookDto createBook(@RequestBody CreateBookRequestDto bookDto) {
         return bookService.save(bookDto);

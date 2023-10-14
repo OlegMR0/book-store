@@ -5,6 +5,8 @@ import com.example.bookstore.dto.CreateBookRequestDto;
 import com.example.bookstore.dto.mapper.BookMapper;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.BookRepository;
+import com.example.bookstore.repository.SpecificationBuilder;
+import com.example.bookstore.repository.book.BookSearchParameters;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -13,9 +15,11 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class BookServiceImpl implements BookService {
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     private final BookMapper bookMapper;
+
+    private final SpecificationBuilder<Book, BookSearchParameters> specificationBuilder;
 
     @Override
     public BookDto save(CreateBookRequestDto book) {
@@ -49,4 +53,14 @@ public class BookServiceImpl implements BookService {
             return bookMapper.toDto(bookRepository.save(bookModel));
         } else throw new EntityNotFoundException();
     }
+
+    @Override
+    public List<BookDto> search(BookSearchParameters searchParameters) {
+       return bookRepository.findAll(specificationBuilder.build(searchParameters))
+                .stream()
+                .map(bookMapper::toDto)
+                .toList();
+    }
+
+
 }
