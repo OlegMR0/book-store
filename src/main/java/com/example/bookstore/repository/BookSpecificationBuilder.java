@@ -2,8 +2,6 @@ package com.example.bookstore.repository;
 
 import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.book.BookSearchParameters;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -24,8 +22,9 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book, Book
                 "author"));
         specification = specification.and(parseListToSpecification(searchParameters.getIsbn(),
                 "isbn"));
-        specification = specification.and(parseListToSpecification(Arrays.asList(searchParameters.getPriceFrom(), searchParameters.getPriceTo()),
-                "price"));
+        List<String> priceBounds = Arrays.asList(searchParameters.getPriceFrom(),
+                searchParameters.getPriceTo());
+        specification = specification.and(parseListToSpecification(priceBounds, "price"));
         specification = specification.and(parseListToSpecification(searchParameters.getTitle(),
                 "title"));
         return specification;
