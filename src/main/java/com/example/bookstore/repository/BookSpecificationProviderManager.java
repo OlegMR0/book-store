@@ -1,17 +1,16 @@
 package com.example.bookstore.repository;
 
 import com.example.bookstore.model.Book;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
+@AllArgsConstructor
 @Component
 public class BookSpecificationProviderManager implements SpecificationProviderManager<Book> {
-    @Autowired
+    private static final String ERROR_MESSAGE = "Can't find correct "
+            + "specification provider for this key ";
     private List<SpecificationProvider<Book>> specificationProviders;
-    private static final String ERROR_MESSAGE = "Can't find correct specification provider for this key ";
-
 
     @Override
     public SpecificationProvider<Book> getSpecificationProviderByKey(String key) {

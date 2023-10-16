@@ -51,16 +51,16 @@ public class BookServiceImpl implements BookService {
             Book bookModel = bookMapper.toModel(book);
             bookModel.setId(id);
             return bookMapper.toDto(bookRepository.save(bookModel));
-        } else throw new EntityNotFoundException();
+        } else {
+            throw new EntityNotFoundException();
+        }
     }
 
     @Override
     public List<BookDto> search(BookSearchParameters searchParameters) {
-       return bookRepository.findAll(specificationBuilder.build(searchParameters))
+        return bookRepository.findAll(specificationBuilder.build(searchParameters))
                 .stream()
                 .map(bookMapper::toDto)
                 .toList();
     }
-
-
 }

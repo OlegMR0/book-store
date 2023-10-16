@@ -37,6 +37,7 @@ public class BookController {
     public List<BookDto> search(BookSearchParameters searchParameters) {
         return bookService.search(searchParameters);
     }
+
     @PostMapping
     public BookDto createBook(@RequestBody CreateBookRequestDto bookDto) {
         return bookService.save(bookDto);
