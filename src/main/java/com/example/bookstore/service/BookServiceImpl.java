@@ -47,7 +47,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto update(Long id, CreateBookRequestDto book) {
-        if (bookRepository.findById(id).isPresent()) {
+        if (bookRepository.existsById(id)) {
             Book bookModel = bookMapper.toModel(book);
             bookModel.setId(id);
             return bookMapper.toDto(bookRepository.save(bookModel));

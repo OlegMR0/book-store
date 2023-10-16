@@ -25,8 +25,17 @@ public class TitleSpecificationProvider implements SpecificationProvider<Book> {
             @Override
             public Predicate toPredicate(Root<Book> root, CriteriaQuery<?> query,
                                          CriteriaBuilder criteriaBuilder) {
-                return root.get(FIELD_SPECIFICATION).in(params);
+                Predicate predicate = criteriaBuilder.and();
+                for (String param : params) {
+                    predicate = criteriaBuilder.and(predicate, criteriaBuilder
+                            .like(root.get(FIELD_SPECIFICATION), getLikePattern(param)));
+                }
+                return predicate;
             }
         };
+    }
+
+    private String getLikePattern(String str) {
+        return "%" + str + "%";
     }
 }
