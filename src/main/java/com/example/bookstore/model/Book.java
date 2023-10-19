@@ -1,6 +1,5 @@
 package com.example.bookstore.model;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +7,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -23,18 +26,18 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Nonnull
+    @NotBlank
     private String title;
-    @Nonnull
+    @NotBlank
     private String author;
-    @Nonnull
     @Column(unique = true)
+    @NotBlank
     private String isbn;
-    @Nonnull
+    @NotNull
+    @Positive
     private BigDecimal price;
     private String description;
     private String coverImage;
-    @Nonnull
     private boolean isDeleted = false;
 
 }
