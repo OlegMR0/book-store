@@ -57,7 +57,8 @@ public class BookController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully saved"),
             @ApiResponse(responseCode = "400", description = "Bad Request - Invalid parameters"),
-            @ApiResponse(responseCode = "409", description = "Integrity constraint violation - Not unique parameter")
+            @ApiResponse(responseCode = "409",
+                    description = "Integrity constraint violation - Not unique parameter")
     })
     @Operation(summary = "Create a new book",
             description = "Create a new book with the provided body.")
