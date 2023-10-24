@@ -5,6 +5,8 @@ import com.example.bookstore.dto.CreateBookRequestDto;
 import com.example.bookstore.repository.book.BookSearchParameters;
 import com.example.bookstore.service.BookService;
 import jakarta.validation.Valid;
+
+import java.awt.print.Pageable;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,8 +27,8 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<BookDto> getAll() {
-        return bookService.findAll();
+    public List<BookDto> getAll(Pageable pageable) {
+        return bookService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
