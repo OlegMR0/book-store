@@ -8,10 +8,9 @@ import com.example.bookstore.repository.BookRepository;
 import com.example.bookstore.repository.SpecificationBuilder;
 import com.example.bookstore.repository.book.BookSearchParameters;
 import jakarta.persistence.EntityNotFoundException;
-
-import java.awt.print.Pageable;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
