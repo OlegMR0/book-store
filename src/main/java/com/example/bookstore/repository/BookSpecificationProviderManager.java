@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookSpecificationProviderManager implements SpecificationProviderManager<Book> {
     private static final String ERROR_MESSAGE = "Can't find correct "
-            + "specification provider for this key ";
+            + "specification provider for this key %s";
     private List<SpecificationProvider<Book>> specificationProviders;
 
     @Override
     public SpecificationProvider<Book> getSpecificationProviderByKey(String key) {
         return specificationProviders.stream()
                 .filter((sp) -> sp.getKey().equals(key)).findFirst()
-                .orElseThrow(() -> new RuntimeException(ERROR_MESSAGE + key));
+                .orElseThrow(() -> new RuntimeException(String.format(ERROR_MESSAGE, key)));
     }
 }
