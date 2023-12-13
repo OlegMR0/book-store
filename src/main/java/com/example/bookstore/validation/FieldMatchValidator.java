@@ -32,6 +32,5 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException("Fields don't match or wrong field names!");
         }
-
     }
 }
