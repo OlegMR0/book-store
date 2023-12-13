@@ -12,8 +12,9 @@ public class RegisterUserDto {
     @NotBlank
     private String password;
     private String repeatPassword;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
     private String shippingAddress;
-
 }
