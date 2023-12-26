@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/changes/02-added-soft-delete-book.yaml
   - include:
       file: db/changelog/changes/03-add-user-entity.yaml
+  - include:
+      file: db/changelog/changes/04-increase-user-password-length.yaml
