@@ -8,6 +8,7 @@ import com.example.bookstore.model.User;
 import com.example.bookstore.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
     private UserMapper mapper;
     private UserRepository repository;
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping
     public UserResponseDto register(@RequestBody @Valid RegisterUserDto registerUserDto)
@@ -26,6 +28,7 @@ public class AuthenticationController {
         if (repository.findByEmail(registerUserDto.getEmail()).isPresent()) {
             throw new RegistrationException("User with this email already exists");
         }
+        registerUserDto.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
         User user = repository.save(mapper.toModel(registerUserDto));
         return mapper.toResponseDto(user);
     }
