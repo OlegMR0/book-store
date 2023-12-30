@@ -4,11 +4,14 @@ import com.example.bookstore.dto.RegisterUserDto;
 import com.example.bookstore.dto.UserResponseDto;
 import com.example.bookstore.dto.mapper.UserMapper;
 import com.example.bookstore.exception.RegistrationException;
+import com.example.bookstore.model.Role;
 import com.example.bookstore.model.User;
+import com.example.bookstore.repository.RoleRepository;
 import com.example.bookstore.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,4 +35,5 @@ public class AuthenticationController {
         User user = repository.save(mapper.toModel(registerUserDto));
         return mapper.toResponseDto(user);
     }
+
 }
