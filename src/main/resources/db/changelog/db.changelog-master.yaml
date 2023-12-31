@@ -11,3 +11,5 @@ databaseChangeLog:
       file: db/changelog/changes/05-add-role-entity.yaml
   - include:
       file: db/changelog/changes/06-add-user-role-relation.yaml
+  - include:
+      file: db/changelog/changes/07-insert-initial-roles-and-admin.yaml

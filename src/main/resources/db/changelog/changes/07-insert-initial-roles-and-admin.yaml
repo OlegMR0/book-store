@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-initial-roles-and-admin
+      author: Oleg
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_name
+                  value: ADMIN
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_name
+                  value: USER
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: admin@mail.com
+              - column:
+                  name: password
+                  value: $2a$10$/7L9tsH2mwZvHrHlKWue3umEGodTn4FZnt51hh3QUqIR3WxBZWdaO
+#                  securePassword123
+              - column:
+                  name: first_name
+                  value: Craig
+              - column:
+                  name: last_name
+                  value: Walls
+              - column:
+                  name: shipping_address
+                  value: Main St, City
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE role_name = 'ADMIN')
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'admin@mail.com')

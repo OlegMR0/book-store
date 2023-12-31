@@ -35,5 +35,4 @@ public class AuthenticationController {
         User user = repository.save(mapper.toModel(registerUserDto));
         return mapper.toResponseDto(user);
     }
-
 }
