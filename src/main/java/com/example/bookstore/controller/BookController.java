@@ -14,6 +14,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class BookController {
 
     @Operation(summary = "Get books", description = "Returns all available(not deleted) books.")
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public List<BookDto> getAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
@@ -43,6 +45,7 @@ public class BookController {
     })
     @Operation(summary = "Get a book by id", description = "Returns a book as per the identifier.")
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public BookDto getBookById(@PathVariable
                                @Parameter(description = "Id of book to be searched") Long id) {
         return bookService.findById(id);
@@ -51,6 +54,7 @@ public class BookController {
     @Operation(summary = "Find books by specific parameters ",
             description = "Returns all books that match the conditions.")
     @GetMapping("/search")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public List<BookDto> search(BookSearchParameters searchParameters) {
         return bookService.search(searchParameters);
     }
@@ -77,6 +81,7 @@ public class BookController {
     @Operation(summary = "Update a book by id",
             description = "Update an existing book with the provided id and body.")
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public BookDto updateBook(@PathVariable Long id,
                               @RequestBody @Valid CreateBookRequestDto bookDto) {
         return bookService.update(id, bookDto);
@@ -85,6 +90,7 @@ public class BookController {
     @Operation(summary = "Delete a book by id",
             description = "Delete an existing book with the provided id.")
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteById(id);
