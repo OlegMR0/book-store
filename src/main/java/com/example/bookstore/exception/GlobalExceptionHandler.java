@@ -70,12 +70,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(RegistrationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.CONFLICT)
     protected ResponseEntity<Object> handleRegistrationException(
             RegistrationException exception) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.NOT_FOUND);
+        body.put("status", HttpStatus.CONFLICT);
         body.put("error", "Registration exception");
         body.put("message", exception.getMessage());
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);

@@ -4,6 +4,10 @@ import com.example.bookstore.dto.RegisterUserDto;
 import com.example.bookstore.dto.UserResponseDto;
 import com.example.bookstore.exception.RegistrationException;
 import com.example.bookstore.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,15 +15,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Authentication Controller")
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
 public class AuthenticationController {
     private UserService userService;
 
+    @Operation(summary = "Register a new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully registered a new user"),
+            @ApiResponse(responseCode = "400", description = "Bad request - Invalid parameters"),
+            @ApiResponse(responseCode = "409", description = "User with this email already exists")
+    })
     @PostMapping
     public UserResponseDto register(@RequestBody @Valid RegisterUserDto registerUserDto)
             throws RegistrationException {
         return userService.register(registerUserDto);
     }
+
 }
