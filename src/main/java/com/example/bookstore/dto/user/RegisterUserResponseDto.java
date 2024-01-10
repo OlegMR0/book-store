@@ -1,9 +1,9 @@
-package com.example.bookstore.dto;
+package com.example.bookstore.dto.user;
 
 import lombok.Data;
 
 @Data
-public class UserResponseDto {
+public class RegisterUserResponseDto {
     private Long id;
     private String email;
     private String firstName;
