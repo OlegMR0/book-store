@@ -1,7 +1,8 @@
 package com.example.bookstore.controller;
 
-import com.example.bookstore.dto.RegisterUserDto;
-import com.example.bookstore.dto.UserResponseDto;
+import com.example.bookstore.dto.user.LoginUserResponseDto;
+import com.example.bookstore.dto.user.RegisterUserRequestDto;
+import com.example.bookstore.dto.user.RegisterUserResponseDto;
 import com.example.bookstore.exception.RegistrationException;
 import com.example.bookstore.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,9 +30,14 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "409", description = "User with this email already exists")
     })
     @PostMapping
-    public UserResponseDto register(@RequestBody @Valid RegisterUserDto registerUserDto)
+    public RegisterUserResponseDto register(@RequestBody @Valid RegisterUserRequestDto registerUserRequestDto)
             throws RegistrationException {
-        return userService.register(registerUserDto);
+        return userService.register(registerUserRequestDto);
+    }
+
+    @PostMapping("/login")
+    public LoginUserResponseDto login(@RequestBody) {
+
     }
 
 }

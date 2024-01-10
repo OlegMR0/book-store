@@ -1,8 +1,8 @@
 package com.example.bookstore.service;
 
-import com.example.bookstore.dto.RegisterUserDto;
-import com.example.bookstore.dto.UserResponseDto;
+import com.example.bookstore.dto.user.RegisterUserRequestDto;
+import com.example.bookstore.dto.user.RegisterUserResponseDto;
 
 public interface UserService {
-    UserResponseDto register(RegisterUserDto registerUserDto);
+    RegisterUserResponseDto register(RegisterUserRequestDto registerUserRequestDto);
 }
