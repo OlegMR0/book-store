@@ -1,8 +1,8 @@
 package com.example.bookstore.service;
 
+import com.example.bookstore.dto.mapper.UserMapper;
 import com.example.bookstore.dto.user.RegisterUserRequestDto;
 import com.example.bookstore.dto.user.RegisterUserResponseDto;
-import com.example.bookstore.dto.mapper.UserMapper;
 import com.example.bookstore.exception.RegistrationException;
 import com.example.bookstore.model.Role;
 import com.example.bookstore.model.User;
@@ -26,7 +26,8 @@ public class UserServiceImpl implements UserService {
         if (repository.findByEmail(registerUserRequestDto.getEmail()).isPresent()) {
             throw new RegistrationException("User with this email already exists");
         }
-        registerUserRequestDto.setPassword(passwordEncoder.encode(registerUserRequestDto.getPassword()));
+        registerUserRequestDto
+                .setPassword(passwordEncoder.encode(registerUserRequestDto.getPassword()));
         User user = mapper.toModel(registerUserRequestDto);
         Role userRole = roleRepository.getByRole(Role.RoleName.USER);
         user.setRoles(Set.of(userRole));
