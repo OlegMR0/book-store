@@ -1,9 +1,11 @@
 package com.example.bookstore.controller;
 
+import com.example.bookstore.dto.user.LoginUserRequestDto;
 import com.example.bookstore.dto.user.LoginUserResponseDto;
 import com.example.bookstore.dto.user.RegisterUserRequestDto;
 import com.example.bookstore.dto.user.RegisterUserResponseDto;
 import com.example.bookstore.exception.RegistrationException;
+import com.example.bookstore.security.AuthenticationService;
 import com.example.bookstore.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AuthenticationController {
     private UserService userService;
+    private final AuthenticationService authenticationService;
 
     @Operation(summary = "Register a new user")
     @ApiResponses(value = {
@@ -36,8 +39,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public LoginUserResponseDto login(@RequestBody) {
-
+    public LoginUserResponseDto login(@RequestBody LoginUserRequestDto requestDto) {
+        return authenticationService.authenticate(requestDto);
     }
 
 }
