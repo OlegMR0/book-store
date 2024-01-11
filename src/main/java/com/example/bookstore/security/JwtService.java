@@ -7,31 +7,38 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.crypto.SecretKey;
-import java.security.Key;
+import jakarta.annotation.PostConstruct;
 import java.time.Duration;
 import java.util.Date;
 import java.util.function.Function;
+import javax.crypto.SecretKey;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
+@Service
+@RequiredArgsConstructor
 public class JwtService {
 
-    @Value("&{jwt.signature-key}")
+    @Value("${jwt.signature-key}")
     private String signatureKey;
-    @Value("&{jwt.signature-key.lifetime-hours}")
+    @Value("${jwt.signature-key.lifetime-hours}")
     private Integer hours;
 
-    private SecretKey key = Keys.hmacShaKeyFor(signatureKey.getBytes());
+    private SecretKey key;
 
+    @PostConstruct
+    private void postConstruct() {
+        key = Keys.hmacShaKeyFor(signatureKey.getBytes());
+    }
 
     public String generateToken(String username) {
         JwtBuilder builder = Jwts.builder();
+        Date currentDate = new Date(System.currentTimeMillis());
         return builder
                 .subject(username)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(Duration.ofHours(hours).toMillis()))
+                .issuedAt(currentDate)
+                .expiration(new Date(currentDate.getTime() + Duration.ofHours(hours).toMillis()))
                 .signWith(key)
                 .compact();
     }
@@ -53,7 +60,7 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    private  <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         JwtParser parser = Jwts.parser().verifyWith(key).build();
         Claims payload = parser.parseSignedClaims(token).getPayload();
         return claimsResolver.apply(payload);
