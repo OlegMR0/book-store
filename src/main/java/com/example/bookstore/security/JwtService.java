@@ -1,4 +1,3 @@
-package com.example.bookstore.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

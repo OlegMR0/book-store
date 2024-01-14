@@ -38,7 +38,7 @@ public class AuthenticationController {
             throws RegistrationException {
         return userService.register(registerUserRequestDto);
     }
-
+    @Operation(summary = "Authenticate user and generate JWT token")
     @PostMapping("/login")
     public LoginUserResponseDto login(@RequestBody LoginUserRequestDto requestDto) {
         return authenticationService.authenticate(requestDto);
