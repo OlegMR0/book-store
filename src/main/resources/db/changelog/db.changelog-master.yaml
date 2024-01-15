@@ -15,3 +15,5 @@ databaseChangeLog:
       file: db/changelog/changes/07-insert-initial-roles-and-admin.yaml
   - include:
       file: db/changelog/changes/08-add-category-entity.yaml
+  - include:
+      file: db/changelog/changes/09-create-books-categories-table.yaml
