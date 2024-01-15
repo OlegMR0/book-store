@@ -2,7 +2,7 @@ package com.example.bookstore.service;
 
 import com.example.bookstore.dto.book.BookDto;
 import com.example.bookstore.dto.book.CreateBookRequestDto;
-import com.example.bookstore.repository.book.BookSearchParameters;
+import com.example.bookstore.repository.book.book_search.BookSearchParameters;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 

@@ -1,7 +1,10 @@
-package com.example.bookstore.repository;
+package com.example.bookstore.repository.book;
 
 import com.example.bookstore.model.Book;
 import java.util.List;
+
+import com.example.bookstore.repository.SpecificationProvider;
+import com.example.bookstore.repository.SpecificationProviderManager;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
