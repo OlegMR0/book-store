@@ -1,10 +1,13 @@
 package com.example.bookstore.dto.book;
 
+import com.example.bookstore.model.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.Set;
+
 import lombok.Data;
 
 @Data
@@ -23,5 +26,6 @@ public class CreateBookRequestDto {
     @Schema(name = "International Standard Book Number", example = "9781429964371 ")
     private String isbn;
     private String description;
+    private Set<Category> categories;
     private String coverImage;
 }
