@@ -1,7 +1,9 @@
-package com.example.bookstore.repository;
+package com.example.bookstore.repository.book;
 
 import com.example.bookstore.model.Book;
-import com.example.bookstore.repository.book.BookSearchParameters;
+import com.example.bookstore.repository.SpecificationBuilder;
+import com.example.bookstore.repository.SpecificationProviderManager;
+import com.example.bookstore.repository.book.book_search.BookSearchParameters;
 import java.util.Arrays;
 import java.util.List;
 import lombok.AllArgsConstructor;
