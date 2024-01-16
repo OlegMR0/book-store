@@ -20,9 +20,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class JwtService {
 
-    @Value("QJQlI8dWpwcRExmLOXjVMOh4eqxTsw2LPhlKeEkh3RI=")
+    @Value("${jwt.signature-key}")
     private String signatureKey;
-    @Value("1")
+    @Value("${jwt.signature-key.lifetime-hours}")
     private Integer hours;
 
     private SecretKey key;
