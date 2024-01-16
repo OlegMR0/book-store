@@ -1,6 +1,7 @@
 package com.example.bookstore.service;
 
 import com.example.bookstore.dto.book.BookDto;
+import com.example.bookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.example.bookstore.dto.book.CreateBookRequestDto;
 import com.example.bookstore.dto.mapper.BookMapper;
 import com.example.bookstore.model.Book;
@@ -55,6 +56,11 @@ public class BookServiceImpl implements BookService {
         } else {
             throw new EntityNotFoundException();
         }
+    }
+
+    @Override
+    public List<BookDtoWithoutCategoryIds> findAllByCategoriesId(Long categoryId) {
+        return bookRepository.findAllByCategoriesId(categoryId);
     }
 
     @Override
