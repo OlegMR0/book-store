@@ -6,11 +6,10 @@ import com.example.bookstore.dto.mapper.CategoryMapper;
 import com.example.bookstore.model.Category;
 import com.example.bookstore.repository.category.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -28,7 +27,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDto getById(Long id) {
-        Category category = categoryRepository.getReferenceById(id);
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Can't find category by id " + id));
         return categoryMapper.toDto(category);
     }
 

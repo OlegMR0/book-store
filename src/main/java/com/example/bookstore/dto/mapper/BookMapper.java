@@ -7,18 +7,20 @@ import com.example.bookstore.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, uses = {CategoryMapper.class})
+@Mapper(componentModel = "spring",
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+        uses = {CategoryMapper.class},
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BookMapper {
 
-    @Mapping(target = "categories", source = "categories", qualifiedByName = "getCategoriesIds")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
+    @Mapping(target = "categories", source = "categoryIds", qualifiedByName = "getCategoriesByIds")
     Book toModel(CreateBookRequestDto createBookRequestDto);
 
-    @Mapping(target = "deleted", ignore = true)
     Book toModel(BookDto bookDto);
 
+    @Mapping(target = "categoryIds", source = "categories", qualifiedByName = "getCategoriesIds")
     BookDto toDto(Book book);
 
     BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);

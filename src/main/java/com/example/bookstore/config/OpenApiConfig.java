@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(info=@Info(title = "Book Store API"))
+@OpenAPIDefinition(info = @Info(title = "Book Store API"))
 public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenApi() {

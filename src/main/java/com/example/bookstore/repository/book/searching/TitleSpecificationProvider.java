@@ -1,4 +1,4 @@
-package com.example.bookstore.repository.book.book_search;
+package com.example.bookstore.repository.book.searching;
 
 import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.SpecificationProvider;
@@ -11,8 +11,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AuthorSpecificationProvider implements SpecificationProvider<Book> {
-    private static final String FIELD_SPECIFICATION = "author";
+public class TitleSpecificationProvider implements SpecificationProvider<Book> {
+    private static final String FIELD_SPECIFICATION = "title";
 
     @Override
     public String getKey() {
@@ -25,8 +25,17 @@ public class AuthorSpecificationProvider implements SpecificationProvider<Book> 
             @Override
             public Predicate toPredicate(Root<Book> root, CriteriaQuery<?> query,
                                          CriteriaBuilder criteriaBuilder) {
-                return root.get(FIELD_SPECIFICATION).in(params);
+                Predicate predicate = criteriaBuilder.and();
+                for (String param : params) {
+                    predicate = criteriaBuilder.and(predicate, criteriaBuilder
+                            .like(root.get(FIELD_SPECIFICATION), getLikePattern(param)));
+                }
+                return predicate;
             }
         };
+    }
+
+    private String getLikePattern(String str) {
+        return "%" + str + "%";
     }
 }
