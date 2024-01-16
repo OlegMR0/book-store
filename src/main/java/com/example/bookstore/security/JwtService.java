@@ -22,7 +22,7 @@ public class JwtService {
 
     @Value("QJQlI8dWpwcRExmLOXjVMOh4eqxTsw2LPhlKeEkh3RI=")
     private String signatureKey;
-    @Value("${jwt.signature-key.lifetime-hours}")
+    @Value("1")
     private Integer hours;
 
     private SecretKey key;
