@@ -1,4 +1,4 @@
-package com.example.bookstore.repository.book.book_search;
+package com.example.bookstore.repository.book.searching;
 
 import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.SpecificationProvider;
@@ -11,8 +11,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IsbnSpecificationProvider implements SpecificationProvider<Book> {
-    private static final String FIELD_SPECIFICATION = "isbn";
+public class AuthorSpecificationProvider implements SpecificationProvider<Book> {
+    private static final String FIELD_SPECIFICATION = "author";
 
     @Override
     public String getKey() {

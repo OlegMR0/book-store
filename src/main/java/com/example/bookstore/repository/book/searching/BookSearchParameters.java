@@ -1,4 +1,4 @@
-package com.example.bookstore.repository.book.book_search;
+package com.example.bookstore.repository.book.searching;
 
 import com.example.bookstore.repository.SearchParameters;
 import java.util.List;

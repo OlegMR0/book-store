@@ -1,8 +1,6 @@
 package com.example.bookstore.repository.book;
 
-import com.example.bookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.example.bookstore.model.Book;
-
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -19,12 +17,14 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
 
     Book getById(Long id);
 
+    @Query("SELECT b FROM Book b LEFT JOIN FETCH b.categories WHERE b.id = :id")
     Optional<Book> findById(Long id);
 
+    @Query("SELECT b FROM Book b LEFT JOIN FETCH b.categories")
     Page<Book> findAll(Pageable pageable);
 
     void deleteById(Long id);
 
     @Query("SELECT b FROM Book b JOIN b.categories c WHERE c.id = :categoryId")
-    List<BookDtoWithoutCategoryIds> findAllByCategoriesId(Long categoryId);
+    List<Book> findAllByCategoriesId(Long categoryId);
 }
