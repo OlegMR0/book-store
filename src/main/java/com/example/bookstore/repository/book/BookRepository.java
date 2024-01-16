@@ -1,5 +1,6 @@
 package com.example.bookstore.repository.book;
 
+import com.example.bookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.example.bookstore.model.Book;
 
 import java.util.List;
@@ -25,5 +26,5 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
     void deleteById(Long id);
 
     @Query("SELECT b FROM Book b JOIN b.categories c WHERE c.id = :categoryId")
-    List<Book> findAllByCategories_Id(Long categoryId);
+    List<BookDtoWithoutCategoryIds> findAllByCategoriesId(Long categoryId);
 }
