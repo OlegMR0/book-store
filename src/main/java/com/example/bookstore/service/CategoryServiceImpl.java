@@ -21,7 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResponseDto> findAll(Pageable pageable) {
         return categoryRepository.findAll(pageable)
                 .stream()
-                .map(c -> categoryMapper.toDto(c))
+                .map(category -> categoryMapper.toDto(category))
                 .toList();
     }
 
@@ -41,19 +41,19 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDto update(Long id, CreateCategoryRequestDto requestDto) {
-        if (categoryRepository.existsById(id)) {
-            Category category = categoryMapper.toCategory(requestDto);
-            category.setId(id);
-            Category updated = categoryRepository.save(category);
-            return categoryMapper.toDto(updated);
+        if (!categoryRepository.existsById(id)) {
+            throw new EntityNotFoundException();
         }
-        throw new EntityNotFoundException();
+        Category category = categoryMapper.toCategory(requestDto);
+        category.setId(id);
+        Category updated = categoryRepository.save(category);
+        return categoryMapper.toDto(updated);
     }
 
     @Override
     public void deleteById(Long id) {
         if (!categoryRepository.existsById(id)) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("Can't delete category by id " + id);
         }
         categoryRepository.deleteById(id);
     }

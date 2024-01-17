@@ -73,5 +73,4 @@ public class CategoryController {
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteById(id);
     }
-
 }
