@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class JwtService {
-
     @Value("${jwt.signature-key}")
     private String signatureKey;
     @Value("${jwt.signature-key.lifetime-hours}")

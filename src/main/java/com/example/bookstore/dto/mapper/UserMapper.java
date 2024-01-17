@@ -11,7 +11,6 @@ import org.mapstruct.ReportingPolicy;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
-
     User toModel(RegisterUserRequestDto userDto);
 
     RegisterUserResponseDto toResponseDto(RegisterUserRequestDto registerUserRequestDto);
