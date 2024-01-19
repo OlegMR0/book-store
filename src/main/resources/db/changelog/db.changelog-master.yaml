@@ -17,3 +17,7 @@ databaseChangeLog:
       file: db/changelog/changes/08-add-category-entity.yaml
   - include:
       file: db/changelog/changes/09-create-books-categories-table.yaml
+  - include:
+      file: db/changelog/changes/10-add-shopping-cart-entity.yaml
+  - include:
+      file: db/changelog/changes/11-add-cart-item-entity.yaml
