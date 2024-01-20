@@ -4,6 +4,7 @@ import com.example.bookstore.dto.book.BookDto;
 import com.example.bookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.example.bookstore.dto.book.CreateBookRequestDto;
 import com.example.bookstore.model.Book;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

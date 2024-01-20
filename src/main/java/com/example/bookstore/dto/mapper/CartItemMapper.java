@@ -1,8 +1,10 @@
 package com.example.bookstore.dto.mapper;
 
+import com.example.bookstore.dto.cartItem.CartItemResponseDto;
 import com.example.bookstore.dto.cartItem.CreateCartItemRequestDto;
 import com.example.bookstore.model.CartItem;
 import lombok.AllArgsConstructor;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -12,10 +14,18 @@ import org.mapstruct.NullValueCheckStrategy;
 public interface CartItemMapper {
 
     @Mapping(target = "shoppingCart", source = "userId", qualifiedByName = "getShoppingCartsById")
-    @Mapping(target = "book", source = "bookId", qualifiedByName = "getBookById")
-    @Mapping(target = "quantity", source = "quantity")
+    @Mapping(target = "book", source = "requestDto.bookId", qualifiedByName = "getBookById")
+    @Mapping(target = "quantity", source = "requestDto.quantity")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "isDeleted", ignore = true)
     CartItem toCartItem(CreateCartItemRequestDto requestDto, Long userId);
+
+
+    @Mapping(target = "quantity", source = "quantity")
+    @Mapping(target = "bookTitle", source = "book.title")
+    @Mapping(target = "bookAuthor", source = "book.author")
+    @Mapping(target = "bookId", source = "book.id")
+    CartItemResponseDto toResponseDto(CartItem cartItem);
+
 
 }
