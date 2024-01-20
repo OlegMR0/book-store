@@ -28,13 +28,12 @@ public interface CategoryMapper {
 
     @Named("getCategoriesByIds")
     default Set<Category> getCategoriesByIds(Set<Long> categoryIds) {
-        Set<Category> categories = categoryIds.stream()
+        return categoryIds.stream()
                 .map(id -> {
                     Category newCategory = new Category();
                     newCategory.setId(id);
                     return newCategory;
                 })
                 .collect(Collectors.toSet());
-        return categories;
     }
 }
