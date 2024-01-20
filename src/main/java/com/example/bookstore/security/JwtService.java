@@ -49,7 +49,7 @@ public class JwtService {
                     .build();
             Jws<Claims> claims = parser.parseSignedClaims(token);
             Date expiration = claims.getPayload().getExpiration();
-            return expiration.before(new Date());
+            return new Date().before(expiration);
         } catch (JwtException ex) {
             throw new JwtException("Invalid JWT Token");
         }

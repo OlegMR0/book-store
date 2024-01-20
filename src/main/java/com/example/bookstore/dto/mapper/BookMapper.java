@@ -6,6 +6,7 @@ import com.example.bookstore.dto.book.CreateBookRequestDto;
 import com.example.bookstore.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.ReportingPolicy;
 
@@ -24,4 +25,11 @@ public interface BookMapper {
     BookDto toDto(Book book);
 
     BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
+
+    @Named("getBookById")
+    default Book getBookById(Long id) {
+        Book book = new Book();
+        book.setId(id);
+        return book;
+    }
 }
