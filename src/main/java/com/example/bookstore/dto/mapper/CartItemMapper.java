@@ -17,7 +17,7 @@ public interface CartItemMapper {
     @Mapping(target = "book", source = "requestDto.bookId", qualifiedByName = "getBookById")
     @Mapping(target = "quantity", source = "requestDto.quantity")
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "isDeleted", ignore = true)
+    @Mapping(target = "deleted", ignore = true)
     CartItem toCartItem(CreateCartItemRequestDto requestDto, Long userId);
 
 

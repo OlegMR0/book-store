@@ -2,7 +2,6 @@ package com.example.bookstore.dto.cartItem;
 
 import lombok.Data;
 
-@Data
 public record CartItemResponseDto (
     Long id,
     Long bookId,
