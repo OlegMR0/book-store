@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class BookDto {
-    private String isbn;
     private Long id;
+    private String isbn;
     private String title;
     private String author;
     private BigDecimal price;

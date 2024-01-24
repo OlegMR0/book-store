@@ -25,7 +25,7 @@ public class ShoppingCartController {
 
 
     @PostMapping
-    public CartItemResponseDto addCartItem(@RequestBody CreateCartItemRequestDto requestDto, Pageable pageable, Authentication authentication) {
-        return shoppingCartService.addCartItem(requestDto, pageable, authentication);
+    public CartItemResponseDto addCartItem(@RequestBody CreateCartItemRequestDto requestDto, Authentication authentication) {
+        return shoppingCartService.addCartItem(requestDto, authentication);
     }
 }
