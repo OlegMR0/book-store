@@ -3,6 +3,7 @@ package com.example.bookstore.model;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,10 +31,11 @@ public class ShoppingCart {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne
     @MapsId
     @JoinColumn(name = "user_id", unique = true, nullable = false)
     private User user;
+
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "shoppingCart")

@@ -8,6 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public interface ShoppingCartService {
-    CartItemResponseDto addCartItem(CreateCartItemRequestDto requestDto, Pageable pageable, Authentication authentication);
+    CartItemResponseDto addCartItem(CreateCartItemRequestDto requestDto, Authentication authentication);
 
 }

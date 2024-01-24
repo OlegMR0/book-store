@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         Role userRole = roleRepository.getByRole(Role.RoleName.USER);
         user.setRoles(Set.of(userRole));
         repository.save(user);
-        throw new RegistrationException("An error has occurred while assigning shopping cart to user.");
+        return mapper.toResponseDto(user);
     }
 
     @Override
