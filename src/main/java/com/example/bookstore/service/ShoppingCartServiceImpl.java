@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,23 +28,28 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private CartItemService cartItemService;
     private BookMapper bookMapper;
 
+    @Override
     @Transactional
     public CartItemResponseDto addCartItem(CreateCartItemRequestDto requestDto, Authentication authentication) {
-        String email = authentication.getName();
-        User user = userService.getByEmail(email);
+        User user = getUserByAuthentication(authentication);
         ShoppingCart shoppingCart = getOrCreateShoppingCart(user);
         Book book = getBookIfExists(requestDto);
-       if (cartItemService.existsByShoppingCartAndBook(shoppingCart, book)) {
-           CartItem cartItem = cartItemService
-                   .findByShoppingCartAndBook(shoppingCart, book).get();
+        Optional<CartItem> optional = cartItemService.findByShoppingCartAndBook(shoppingCart, book);
+        if (optional.isPresent()) {
+           CartItem cartItem = optional.get();
            requestDto.setQuantity(requestDto.getQuantity() + cartItem.getQuantity());
-
            return cartItemService.update(cartItem.getId(), requestDto);
        }
         return cartItemService.save(requestDto, user);
     }
 
-
+    @Override
+    public List<CartItemResponseDto> getShoppingCartItems(Authentication authentication, Pageable pageable) {
+        User user = getUserByAuthentication(authentication);
+        ShoppingCart shoppingCart = getOrCreateShoppingCart(user);
+        List<CartItemResponseDto> list = cartItemService.getAllItemsByShoppingCart(shoppingCart, pageable);
+        return list;
+    }
 
     private ShoppingCart getOrCreateShoppingCart(User user) {
         if (!shoppingCartRepository.existsById(user.getId())) {
@@ -62,6 +68,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
         ShoppingCart saved = shoppingCartRepository.save(shoppingCart);
+    }
+
+    private User getUserByAuthentication(Authentication authentication) {
+        String email = authentication.getName();
+        User user = userService.getByEmail(email);
+        return user;
     }
 
 

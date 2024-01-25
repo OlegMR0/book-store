@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,5 +28,11 @@ public class ShoppingCartController {
     @PostMapping
     public CartItemResponseDto addCartItem(@RequestBody CreateCartItemRequestDto requestDto, Authentication authentication) {
         return shoppingCartService.addCartItem(requestDto, authentication);
+    }
+
+    @GetMapping
+    public List<CartItemResponseDto> getShoppingCart(Authentication authentication, Pageable pageable) {
+        List<CartItemResponseDto> list = shoppingCartService.getShoppingCartItems(authentication, pageable);
+        return list;
     }
 }
