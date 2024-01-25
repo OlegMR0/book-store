@@ -10,8 +10,10 @@ import com.example.bookstore.model.User;
 import com.example.bookstore.repository.cartItem.CartItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,14 +42,17 @@ public class CartItemServiceImpl implements CartItemService {
         return cartItemMapper.toResponseDto(cartItem);
     }
 
+    @Override
+    public List<CartItemResponseDto> getAllItemsByShoppingCart(ShoppingCart shoppingCart, Pageable pageable) {
+        List<CartItem> cartItems = cartItemRepository.findAllByShoppingCart(shoppingCart, pageable);
+        List<CartItemResponseDto> dtos = cartItems.stream().map(cartItemMapper::toResponseDto).toList();
+        return dtos;
+    }
+
 
     @Override
     public Optional<CartItem> findByShoppingCartAndBook(ShoppingCart shoppingCart, Book book) {
         return cartItemRepository.findByShoppingCartAndBook(shoppingCart, book);
     }
 
-    @Override
-    public boolean existsByShoppingCartAndBook(ShoppingCart shoppingCart, Book book) {
-        return cartItemRepository.existsByShoppingCartAndBook(shoppingCart, book);
-    }
 }

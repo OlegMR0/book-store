@@ -6,7 +6,9 @@ import com.example.bookstore.model.Book;
 import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.ShoppingCart;
 import com.example.bookstore.model.User;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CartItemService {
@@ -15,8 +17,8 @@ public interface CartItemService {
 
     CartItemResponseDto update(Long id, CreateCartItemRequestDto requestDto);
 
-    Optional<CartItem> findByShoppingCartAndBook(ShoppingCart shoppingCart, Book book);
+    List<CartItemResponseDto> getAllItemsByShoppingCart(ShoppingCart shoppingCart, Pageable pageable);
 
-    boolean existsByShoppingCartAndBook(ShoppingCart shoppingCart, Book book);
+    Optional<CartItem> findByShoppingCartAndBook(ShoppingCart shoppingCart, Book book);
 
 }
