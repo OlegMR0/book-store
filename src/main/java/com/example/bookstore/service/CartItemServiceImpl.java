@@ -39,7 +39,7 @@ public class CartItemServiceImpl implements CartItemService {
                 oldItem.getShoppingCart().getId());
         cartItem.setId(id);
         CartItem updated = cartItemRepository.save(cartItem);
-        return cartItemMapper.toResponseDto(cartItem);
+        return cartItemMapper.toResponseDto(updated);
     }
 
     @Override
