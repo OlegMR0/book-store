@@ -8,13 +8,9 @@ import com.example.bookstore.model.Role;
 import com.example.bookstore.model.User;
 import com.example.bookstore.repository.role.RoleRepository;
 import com.example.bookstore.repository.user.UserRepository;
-import java.util.Set;
-
 import jakarta.persistence.EntityNotFoundException;
+import java.util.Set;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
