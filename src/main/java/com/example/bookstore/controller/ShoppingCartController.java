@@ -2,9 +2,6 @@ package com.example.bookstore.controller;
 
 import com.example.bookstore.dto.cartitem.CartItemResponseDto;
 import com.example.bookstore.dto.cartitem.CreateCartItemRequestDto;
-import com.example.bookstore.dto.mapper.CartItemMapper;
-import com.example.bookstore.repository.cartitem.CartItemRepository;
-import com.example.bookstore.service.CartItemService;
 import com.example.bookstore.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
