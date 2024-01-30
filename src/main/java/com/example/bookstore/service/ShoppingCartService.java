@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 
 public interface ShoppingCartService {
-    CartItemResponseDto addCartItem(CreateCartItemRequestDto requestDto,
+    List<CartItemResponseDto> addCartItem(CreateCartItemRequestDto requestDto,
                                     Authentication authentication);
 
     CartItemResponseDto updateCartItem(Long id, CreateCartItemRequestDto requestDto);
