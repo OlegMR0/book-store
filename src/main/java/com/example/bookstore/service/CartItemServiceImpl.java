@@ -8,6 +8,9 @@ import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.ShoppingCart;
 import com.example.bookstore.model.User;
 import com.example.bookstore.repository.cartitem.CartItemRepository;
+import jakarta.persistence.Cache;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -20,21 +23,25 @@ import org.springframework.stereotype.Service;
 public class CartItemServiceImpl implements CartItemService {
     private CartItemRepository cartItemRepository;
     private CartItemMapper cartItemMapper;
+    private EntityManager entityManager;
 
     @Override
     public CartItemResponseDto save(CreateCartItemRequestDto requestDto, User user) {
         CartItem cartItem = cartItemMapper.toCartItem(requestDto, user.getId());
         CartItem savedCartItem = cartItemRepository.save(cartItem);
-        return cartItemMapper.toResponseDto(savedCartItem);
+        entityManager.clear();
+        CartItem readyCartItem = cartItemRepository.findById(savedCartItem.getId()).get();
+        return cartItemMapper.toResponseDto(readyCartItem);
     }
 
     @Override
     public CartItemResponseDto update(Long id, CreateCartItemRequestDto requestDto) {
-        if (!cartItemRepository.existsById(id)) {
+        Optional<CartItem> optional = cartItemRepository.findById(id);
+        if (optional.isEmpty()) {
             throw new EntityNotFoundException(String
                     .format("Can't find a cart item with %s id", id));
         }
-        CartItem oldItem = cartItemRepository.findById(id).get();
+        CartItem oldItem = optional.get();
         CartItem cartItem = cartItemMapper.toCartItem(requestDto,
                 oldItem.getShoppingCart().getId());
         cartItem.setId(id);
