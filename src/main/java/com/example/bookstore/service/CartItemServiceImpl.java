@@ -8,7 +8,6 @@ import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.ShoppingCart;
 import com.example.bookstore.model.User;
 import com.example.bookstore.repository.cartitem.CartItemRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -21,15 +20,12 @@ import org.springframework.stereotype.Service;
 public class CartItemServiceImpl implements CartItemService {
     private CartItemRepository cartItemRepository;
     private CartItemMapper cartItemMapper;
-    private EntityManager entityManager;
 
     @Override
     public CartItemResponseDto save(CreateCartItemRequestDto requestDto, User user) {
         CartItem cartItem = cartItemMapper.toCartItem(requestDto, user.getId());
         CartItem savedCartItem = cartItemRepository.save(cartItem);
-        entityManager.clear();
-        CartItem readyCartItem = cartItemRepository.findById(savedCartItem.getId()).get();
-        return cartItemMapper.toResponseDto(readyCartItem);
+        return cartItemMapper.toResponseDto(savedCartItem);
     }
 
     @Override

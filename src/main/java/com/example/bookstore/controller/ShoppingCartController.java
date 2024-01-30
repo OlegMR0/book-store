@@ -28,8 +28,9 @@ public class ShoppingCartController {
 
     @PostMapping
     @Operation(summary = "Add a new item to the shopping cart")
-    public CartItemResponseDto addCartItem(@RequestBody @Valid CreateCartItemRequestDto requestDto,
-                                           Authentication authentication) {
+    public List<CartItemResponseDto> addCartItem(
+            @RequestBody @Valid CreateCartItemRequestDto requestDto,
+            Authentication authentication) {
         return shoppingCartService.addCartItem(requestDto, authentication);
     }
 

@@ -29,7 +29,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public CartItemResponseDto addCartItem(CreateCartItemRequestDto requestDto,
+    public List<CartItemResponseDto> addCartItem(CreateCartItemRequestDto requestDto,
                                            Authentication authentication) {
         User user = getUserByAuthentication(authentication);
         ShoppingCart shoppingCart = getOrCreateShoppingCart(user);
@@ -38,9 +38,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (optional.isPresent()) {
             CartItem cartItem = optional.get();
             requestDto.setQuantity(requestDto.getQuantity() + cartItem.getQuantity());
-            return cartItemService.update(cartItem.getId(), requestDto);
+            cartItemService.update(cartItem.getId(), requestDto);
+        } else {
+            cartItemService.save(requestDto, user);
         }
-        return cartItemService.save(requestDto, user);
+        return cartItemService.getAllItemsByShoppingCart(shoppingCart, Pageable.unpaged());
     }
 
     @Override
