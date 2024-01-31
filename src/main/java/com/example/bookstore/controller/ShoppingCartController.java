@@ -2,6 +2,7 @@ package com.example.bookstore.controller;
 
 import com.example.bookstore.dto.cartitem.CartItemResponseDto;
 import com.example.bookstore.dto.cartitem.CreateCartItemRequestDto;
+import com.example.bookstore.dto.shoppingcart.ShoppingCartDto;
 import com.example.bookstore.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ public class ShoppingCartController {
 
     @PostMapping
     @Operation(summary = "Add a new item to the shopping cart")
-    public List<CartItemResponseDto> addCartItem(
+    public ShoppingCartDto addCartItem(
             @RequestBody @Valid CreateCartItemRequestDto requestDto,
             Authentication authentication) {
         return shoppingCartService.addCartItem(requestDto, authentication);
@@ -47,15 +48,16 @@ public class ShoppingCartController {
             description = "Update an existing cart item with the provided id and body.")
     @PutMapping("/cart-items/{id}")
     public CartItemResponseDto updateCartItem(@RequestBody @Valid CreateCartItemRequestDto dto,
-                                              @PathVariable Long id) {
-        return shoppingCartService.updateCartItem(id, dto);
+                                              @PathVariable Long id,
+                                              Authentication authentication) {
+        return shoppingCartService.updateCartItem(id, dto, authentication);
     }
 
     @Operation(summary = "Delete a cart item by id",
             description = "Delete an existing cart item with the provided id.")
     @DeleteMapping("/cart-items/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteCartItem(@PathVariable Long id) {
-        shoppingCartService.deleteCartItemFromCart(id);
+    public void deleteCartItem(@PathVariable Long id, Authentication authentication) {
+        shoppingCartService.deleteCartItemFromCart(id, authentication);
     }
 }
