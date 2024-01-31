@@ -4,6 +4,8 @@ import com.example.bookstore.dto.book.BookDto;
 import com.example.bookstore.dto.cartitem.CartItemResponseDto;
 import com.example.bookstore.dto.cartitem.CreateCartItemRequestDto;
 import com.example.bookstore.dto.mapper.BookMapper;
+import com.example.bookstore.dto.mapper.ShoppingCartMapper;
+import com.example.bookstore.dto.shoppingcart.ShoppingCartDto;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.ShoppingCart;
@@ -26,11 +28,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private UserService userService;
     private CartItemService cartItemService;
     private BookMapper bookMapper;
+    private ShoppingCartMapper shoppingCartMapper;
 
     @Override
     @Transactional
-    public List<CartItemResponseDto> addCartItem(CreateCartItemRequestDto requestDto,
-                                           Authentication authentication) {
+    public ShoppingCartDto addCartItem(CreateCartItemRequestDto requestDto,
+                                       Authentication authentication) {
         User user = getUserByAuthentication(authentication);
         ShoppingCart shoppingCart = getOrCreateShoppingCart(user);
         Book book = getBookIfExists(requestDto);
@@ -42,11 +45,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         } else {
             cartItemService.save(requestDto, user);
         }
-        return cartItemService.getAllItemsByShoppingCart(shoppingCart, Pageable.unpaged());
+        return shoppingCartMapper.toDto(shoppingCart);
     }
 
     @Override
-    public CartItemResponseDto updateCartItem(Long id, CreateCartItemRequestDto requestDto) {
+    public CartItemResponseDto updateCartItem(Long id, CreateCartItemRequestDto requestDto,
+                                              Authentication authentication) {
+        User user = getUserByAuthentication(authentication);
+        if (!cartItemService.getById(id).getShoppingCart().getId().equals(user.getId())) {
+            throw new IllegalStateException(
+                    String.format("You don't have an order with %s id", id));
+        }
         return cartItemService.update(id, requestDto);
     }
 
@@ -61,7 +70,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void deleteCartItemFromCart(Long id) {
+    public void deleteCartItemFromCart(Long id, Authentication authentication) {
+        User user = getUserByAuthentication(authentication);
+        if (!cartItemService.getById(id).getShoppingCart().getId().equals(user.getId())) {
+            throw new IllegalStateException(
+                    String.format("You don't have an order with %s id", id));
+        }
         cartItemService.deleteCartItem(id);
     }
 

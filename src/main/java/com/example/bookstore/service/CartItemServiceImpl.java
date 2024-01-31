@@ -22,6 +22,12 @@ public class CartItemServiceImpl implements CartItemService {
     private CartItemMapper cartItemMapper;
 
     @Override
+    public CartItem getById(Long id) {
+        Optional<CartItem> cartItem = cartItemRepository.findById(id);
+        return cartItem.get();
+    }
+
+    @Override
     public CartItemResponseDto save(CreateCartItemRequestDto requestDto, User user) {
         CartItem cartItem = cartItemMapper.toCartItem(requestDto, user.getId());
         CartItem savedCartItem = cartItemRepository.save(cartItem);

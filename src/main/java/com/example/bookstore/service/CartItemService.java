@@ -21,4 +21,6 @@ public interface CartItemService {
     Optional<CartItem> findByShoppingCartAndBook(ShoppingCart shoppingCart, Book book);
 
     void deleteCartItem(Long id);
+
+    CartItem getById(Long id);
 }

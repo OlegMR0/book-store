@@ -6,21 +6,20 @@ import com.example.bookstore.model.CartItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
-        uses = {ShoppingCartMapper.class, BookMapper.class})
+        uses = {BookMapper.class, ShoppingCartMapper.class},
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CartItemMapper {
     @Mapping(target = "shoppingCart", source = "userId", qualifiedByName = "getShoppingCartsById")
     @Mapping(target = "book", source = "requestDto.bookId", qualifiedByName = "getBookById")
     @Mapping(target = "quantity", source = "requestDto.quantity")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
     CartItem toCartItem(CreateCartItemRequestDto requestDto, Long userId);
 
-    @Mapping(target = "quantity", source = "quantity")
     @Mapping(target = "bookTitle", source = "book.title")
-    @Mapping(target = "bookAuthor", source = "book.author")
     @Mapping(target = "bookId", source = "book.id")
+    @Mapping(target = "bookAuthor", source = "book.author")
     CartItemResponseDto toResponseDto(CartItem cartItem);
 }
