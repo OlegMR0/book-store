@@ -7,6 +7,7 @@ import com.example.bookstore.model.Book;
 import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.ShoppingCart;
 import com.example.bookstore.model.User;
+import com.example.bookstore.repository.book.BookRepository;
 import com.example.bookstore.repository.cartitem.CartItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 public class CartItemServiceImpl implements CartItemService {
     private CartItemRepository cartItemRepository;
     private CartItemMapper cartItemMapper;
+    private BookRepository bookRepository;
 
     @Override
     public CartItem getById(Long id) {
@@ -30,8 +32,10 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public CartItemResponseDto save(CreateCartItemRequestDto requestDto, User user) {
         CartItem cartItem = cartItemMapper.toCartItem(requestDto, user.getId());
-        CartItem savedCartItem = cartItemRepository.save(cartItem);
-        return cartItemMapper.toResponseDto(savedCartItem);
+        Book book = bookRepository.findById(requestDto.getBookId())
+                .orElseThrow(EntityNotFoundException::new);
+        cartItem.setBook(book);
+        return cartItemMapper.toResponseDto(cartItemRepository.save(cartItem));
     }
 
     @Override

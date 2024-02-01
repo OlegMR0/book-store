@@ -4,6 +4,7 @@ import com.example.bookstore.dto.book.BookDto;
 import com.example.bookstore.dto.cartitem.CartItemResponseDto;
 import com.example.bookstore.dto.cartitem.CreateCartItemRequestDto;
 import com.example.bookstore.dto.mapper.BookMapper;
+import com.example.bookstore.dto.mapper.CartItemMapper;
 import com.example.bookstore.dto.mapper.ShoppingCartMapper;
 import com.example.bookstore.dto.shoppingcart.ShoppingCartDto;
 import com.example.bookstore.model.Book;
@@ -13,7 +14,6 @@ import com.example.bookstore.model.User;
 import com.example.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -29,11 +29,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private CartItemService cartItemService;
     private BookMapper bookMapper;
     private ShoppingCartMapper shoppingCartMapper;
+    private CartItemMapper cartItemMapper;
 
     @Override
     @Transactional
-    public ShoppingCartDto addCartItem(CreateCartItemRequestDto requestDto,
-                                       Authentication authentication) {
+    public CartItemResponseDto addCartItem(CreateCartItemRequestDto requestDto,
+                                           Authentication authentication) {
         User user = getUserByAuthentication(authentication);
         ShoppingCart shoppingCart = getOrCreateShoppingCart(user);
         Book book = getBookIfExists(requestDto);
@@ -41,11 +42,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (optional.isPresent()) {
             CartItem cartItem = optional.get();
             requestDto.setQuantity(requestDto.getQuantity() + cartItem.getQuantity());
-            cartItemService.update(cartItem.getId(), requestDto);
+            return cartItemService.update(cartItem.getId(), requestDto);
         } else {
-            cartItemService.save(requestDto, user);
+            return cartItemService.save(requestDto, user);
         }
-        return shoppingCartMapper.toDto(shoppingCart);
     }
 
     @Override
@@ -60,13 +60,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public List<CartItemResponseDto> getShoppingCartItems(Authentication authentication,
-                                                          Pageable pageable) {
+    public ShoppingCartDto getShoppingCartItems(Authentication authentication,
+                                                Pageable pageable) {
         User user = getUserByAuthentication(authentication);
         ShoppingCart shoppingCart = getOrCreateShoppingCart(user);
-        List<CartItemResponseDto> list = cartItemService
-                .getAllItemsByShoppingCart(shoppingCart, pageable);
-        return list;
+        ShoppingCartDto dto = shoppingCartMapper.toDto(shoppingCart,
+                cartItemMapper.toDtoList(shoppingCart.getCartItems()));
+        return dto;
     }
 
     @Override
