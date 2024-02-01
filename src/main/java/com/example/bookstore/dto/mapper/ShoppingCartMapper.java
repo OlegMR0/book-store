@@ -22,5 +22,4 @@ public interface ShoppingCartMapper {
         shoppingCart.setId(id);
         return shoppingCart;
     }
-
 }

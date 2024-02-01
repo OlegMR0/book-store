@@ -32,8 +32,10 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public CartItemResponseDto save(CreateCartItemRequestDto requestDto, User user) {
         CartItem cartItem = cartItemMapper.toCartItem(requestDto, user.getId());
-        Book book = bookRepository.findById(requestDto.getBookId())
-                .orElseThrow(EntityNotFoundException::new);
+        Long bookId = requestDto.getBookId();
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException(String
+                        .format("Can't find a book with %s id", bookId)));
         cartItem.setBook(book);
         return cartItemMapper.toResponseDto(cartItemRepository.save(cartItem));
     }
@@ -42,12 +44,10 @@ public class CartItemServiceImpl implements CartItemService {
     public CartItemResponseDto update(Long id, CreateCartItemRequestDto requestDto) {
         Optional<CartItem> optional = cartItemRepository.findById(id);
         if (optional.isEmpty()) {
-            throw new EntityNotFoundException(String
-                    .format("Can't find a cart item with %s id", id));
+            throw new EntityNotFoundException();
         }
-        CartItem oldItem = optional.get();
-        CartItem cartItem = cartItemMapper.toCartItem(requestDto,
-                oldItem.getShoppingCart().getId());
+        Long userId = optional.get().getId();
+        CartItem cartItem = cartItemMapper.toCartItem(requestDto, userId);
         cartItem.setId(id);
         CartItem updated = cartItemRepository.save(cartItem);
         return cartItemMapper.toResponseDto(updated);

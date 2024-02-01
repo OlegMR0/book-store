@@ -21,3 +21,8 @@ databaseChangeLog:
       file: db/changelog/changes/10-add-shopping-cart-entity.yaml
   - include:
       file: db/changelog/changes/11-add-cart-item-entity.yaml
+  - include:
+      file: db/changelog/changes/12-add-order-item-entity.yaml
+  - include:
+      file: db/changelog/changes/13-add-order-entity.yaml
+
