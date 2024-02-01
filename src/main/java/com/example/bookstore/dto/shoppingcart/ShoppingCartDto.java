@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class ShoppingCartDto {
     private Long userId;
     private List<CartItemResponseDto> cartItems;
-
 }
