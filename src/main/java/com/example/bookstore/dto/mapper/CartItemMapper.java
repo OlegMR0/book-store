@@ -3,8 +3,11 @@ package com.example.bookstore.dto.mapper;
 import com.example.bookstore.dto.cartitem.CartItemResponseDto;
 import com.example.bookstore.dto.cartitem.CreateCartItemRequestDto;
 import com.example.bookstore.model.CartItem;
+import java.util.List;
+import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.ReportingPolicy;
 
@@ -22,4 +25,9 @@ public interface CartItemMapper {
     @Mapping(target = "bookId", source = "book.id")
     @Mapping(target = "bookAuthor", source = "book.author")
     CartItemResponseDto toResponseDto(CartItem cartItem);
+
+    @Named("toDtoList")
+    default List<CartItemResponseDto> toDtoList(Set<CartItem> list) {
+        return list.stream().map(this::toResponseDto).toList();
+    }
 }

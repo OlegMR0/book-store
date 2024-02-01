@@ -6,7 +6,6 @@ import com.example.bookstore.dto.shoppingcart.ShoppingCartDto;
 import com.example.bookstore.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,7 @@ public class ShoppingCartController {
 
     @PostMapping
     @Operation(summary = "Add a new item to the shopping cart")
-    public ShoppingCartDto addCartItem(
+    public CartItemResponseDto addCartItem(
             @RequestBody @Valid CreateCartItemRequestDto requestDto,
             Authentication authentication) {
         return shoppingCartService.addCartItem(requestDto, authentication);
@@ -37,11 +36,11 @@ public class ShoppingCartController {
 
     @GetMapping
     @Operation(summary = "Get all items in the shopping cart")
-    public List<CartItemResponseDto> getShoppingCart(Authentication authentication,
+    public ShoppingCartDto getShoppingCart(Authentication authentication,
                                                      Pageable pageable) {
-        List<CartItemResponseDto> list = shoppingCartService
+        ShoppingCartDto cartItems = shoppingCartService
                 .getShoppingCartItems(authentication, pageable);
-        return list;
+        return cartItems;
     }
 
     @Operation(summary = "Update an item by id",
