@@ -35,7 +35,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Transactional
     public CartItemResponseDto addCartItem(CreateCartItemRequestDto requestDto,
                                            Authentication authentication) {
-        User user = getUserByAuthentication(authentication);
+        User user = userService.getUserByAuthentication(authentication);
         ShoppingCart shoppingCart = getOrCreateShoppingCart(user);
         Book book = getBookIfExists(requestDto);
         Optional<CartItem> optional = cartItemService.findByShoppingCartAndBook(shoppingCart, book);
@@ -51,7 +51,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public CartItemResponseDto updateCartItem(Long id, CreateCartItemRequestDto requestDto,
                                               Authentication authentication) {
-        User user = getUserByAuthentication(authentication);
+        User user = userService.getUserByAuthentication(authentication);
         if (!cartItemService.getById(id).getShoppingCart().getId().equals(user.getId())) {
             throw new IllegalStateException(
                     String.format("You don't have an order with %s id", id));
@@ -60,9 +60,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCartDto getShoppingCartItems(Authentication authentication,
-                                                Pageable pageable) {
-        User user = getUserByAuthentication(authentication);
+    public ShoppingCartDto getShoppingCartDto(Authentication authentication,
+                                              Pageable pageable) {
+        User user = userService.getUserByAuthentication(authentication);
         ShoppingCart shoppingCart = getOrCreateShoppingCart(user);
         ShoppingCartDto dto = shoppingCartMapper.toDto(shoppingCart,
                 cartItemMapper.toDtoList(shoppingCart.getCartItems()));
@@ -70,8 +70,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    public ShoppingCart getShoppingCart(Authentication authentication) {
+        User user = userService.getUserByAuthentication(authentication);
+        ShoppingCart shoppingCart = getOrCreateShoppingCart(user);
+        return shoppingCart;
+    }
+
+    @Override
     public void deleteCartItemFromCart(Long id, Authentication authentication) {
-        User user = getUserByAuthentication(authentication);
+        User user = userService.getUserByAuthentication(authentication);
         if (!cartItemService.getById(id).getShoppingCart().getId().equals(user.getId())) {
             throw new IllegalStateException(
                     String.format("You don't have an order with %s id", id));
@@ -97,11 +104,4 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.setUser(user);
         ShoppingCart saved = shoppingCartRepository.save(shoppingCart);
     }
-
-    private User getUserByAuthentication(Authentication authentication) {
-        String email = authentication.getName();
-        User user = userService.getByEmail(email);
-        return user;
-    }
-
 }

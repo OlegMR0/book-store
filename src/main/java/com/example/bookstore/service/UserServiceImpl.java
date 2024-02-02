@@ -11,6 +11,7 @@ import com.example.bookstore.repository.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Set;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,10 +38,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByEmail(String email) {
+    public User getUserByEmail(String email) {
         User user = repository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException(
                         String.format("Can't find a user with %s email", email)));
+        return user;
+    }
+
+    @Override
+    public User getUserByAuthentication(Authentication authentication) {
+        String email = authentication.getName();
+        User user = getUserByEmail(email);
         return user;
     }
 

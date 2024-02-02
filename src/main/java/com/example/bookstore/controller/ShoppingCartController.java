@@ -39,7 +39,7 @@ public class ShoppingCartController {
     public ShoppingCartDto getShoppingCart(Authentication authentication,
                                                      Pageable pageable) {
         ShoppingCartDto cartItems = shoppingCartService
-                .getShoppingCartItems(authentication, pageable);
+                .getShoppingCartDto(authentication, pageable);
         return cartItems;
     }
 
