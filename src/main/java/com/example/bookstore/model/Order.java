@@ -15,6 +15,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -44,6 +46,8 @@ public class Order {
     @Column(nullable = false)
     private String shippingAddress;
     @OneToMany(mappedBy = "order")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<OrderItem> orderItem;
     private boolean isDeleted = false;
 
