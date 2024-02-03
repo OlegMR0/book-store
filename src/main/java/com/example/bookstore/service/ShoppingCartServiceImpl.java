@@ -70,8 +70,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart getShoppingCart(Authentication authentication) {
-        User user = userService.getUserByAuthentication(authentication);
+    public ShoppingCart getShoppingCart(User user) {
         ShoppingCart shoppingCart = getOrCreateShoppingCart(user);
         return shoppingCart;
     }
@@ -91,7 +90,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             addShoppingCartToUser(user);
         }
         return shoppingCartRepository.findById(user.getId())
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(()-> new EntityNotFoundException("Can't find a shopping cart or it is empty."));
     }
 
     private Book getBookIfExists(CreateCartItemRequestDto requestDto) {

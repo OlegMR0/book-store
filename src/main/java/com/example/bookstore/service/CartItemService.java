@@ -23,4 +23,6 @@ public interface CartItemService {
     void deleteCartItem(Long id);
 
     CartItem getById(Long id);
+
+    void deleteCartItems(List<Long> ids);
 }
