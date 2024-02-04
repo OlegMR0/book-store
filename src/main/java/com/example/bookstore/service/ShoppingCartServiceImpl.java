@@ -12,12 +12,16 @@ import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.ShoppingCart;
 import com.example.bookstore.model.User;
 import com.example.bookstore.repository.shoppingcart.ShoppingCartRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
+import java.util.Collections;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -85,9 +89,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItemService.deleteCartItem(id);
     }
 
-    private ShoppingCart getOrCreateShoppingCart(User user) {
-        if (!shoppingCartRepository.existsById(user.getId())) {
-            addShoppingCartToUser(user);
+    private ShoppingCart getOrCreateShoppingCart(User user) {;
+        Optional<ShoppingCart> optional = shoppingCartRepository.findById(user.getId());
+        if (optional.isEmpty()) {
+            return addShoppingCartToUser(user);
         }
         return shoppingCartRepository.findById(user.getId())
                 .orElseThrow(()-> new EntityNotFoundException("Can't find a shopping cart or it is empty."));
@@ -98,9 +103,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return bookMapper.toModel(book);
     }
 
-    private void addShoppingCartToUser(User user) {
+    private ShoppingCart addShoppingCartToUser(User user) {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
+        shoppingCart.setCartItems(Collections.emptySet());
         ShoppingCart saved = shoppingCartRepository.save(shoppingCart);
+        return saved;
     }
 }

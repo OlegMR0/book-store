@@ -3,6 +3,7 @@ package com.example.bookstore.controller;
 import com.example.bookstore.dto.cartitem.CartItemResponseDto;
 import com.example.bookstore.dto.cartitem.CreateCartItemRequestDto;
 import com.example.bookstore.dto.shoppingcart.ShoppingCartDto;
+import com.example.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import com.example.bookstore.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
