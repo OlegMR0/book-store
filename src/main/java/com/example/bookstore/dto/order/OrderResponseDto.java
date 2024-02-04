@@ -1,11 +1,18 @@
 package com.example.bookstore.dto.order;
 
+import com.example.bookstore.dto.orderItem.OrderItemDto;
 import com.example.bookstore.model.Order;
-import java.math.BigDecimal;
+import com.example.bookstore.model.OrderItem;
 
-public record OrderResponseDto (
-        Long userId,
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Set;
+
+public record OrderResponseDto(
+        Long id,
         Order.Status status,
         BigDecimal total,
-        String shippingAddress
+        String shippingAddress,
+        LocalDateTime orderDate,
+        Set<OrderItemDto> orderItems
 ) {}

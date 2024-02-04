@@ -81,4 +81,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(EmptyShoppingCartException.class)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    protected ResponseEntity<Object> handleEmptyShoppingCartException(
+            EmptyShoppingCartException exception) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.NO_CONTENT);
+        body.put("error", "Shopping cart exception");
+        body.put("message", exception.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
+
 }
