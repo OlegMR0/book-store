@@ -4,8 +4,7 @@ import com.example.bookstore.dto.mapper.OrderItemMapper;
 import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.Order;
 import com.example.bookstore.model.OrderItem;
-import com.example.bookstore.repository.OrderItemRepository;
-import com.example.bookstore.repository.order.OrderRepository;
+import com.example.bookstore.repository.orderItem.OrderItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

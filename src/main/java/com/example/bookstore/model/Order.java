@@ -48,7 +48,7 @@ public class Order {
     @OneToMany(mappedBy = "order")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Set<OrderItem> orderItem;
+    private Set<OrderItem> orderItems;
     private boolean isDeleted = false;
 
     public enum Status {

@@ -46,7 +46,7 @@ public class CartItemServiceImpl implements CartItemService {
         if (optional.isEmpty()) {
             throw new EntityNotFoundException();
         }
-        Long userId = optional.get().getId();
+        Long userId = optional.get().getShoppingCart().getId();
         CartItem cartItem = cartItemMapper.toCartItem(requestDto, userId);
         cartItem.setId(id);
         CartItem updated = cartItemRepository.save(cartItem);

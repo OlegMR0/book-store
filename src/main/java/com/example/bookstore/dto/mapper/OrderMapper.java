@@ -1,6 +1,7 @@
 package com.example.bookstore.dto.mapper;
 
 import com.example.bookstore.dto.order.OrderResponseDto;
+import com.example.bookstore.dto.order.OrderResponseDtoWithoutItems;
 import com.example.bookstore.model.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,5 +16,8 @@ public interface OrderMapper {
     @Mapping(target = "status", source = "status")
     @Mapping(target = "total", source = "total")
     @Mapping(target = "shippingAddress", source = "shippingAddress")
+    OrderResponseDtoWithoutItems toResponseDtoWithoutItems(Order order);
+
+
     OrderResponseDto toResponseDto(Order order);
 }
