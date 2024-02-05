@@ -12,21 +12,19 @@ import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.ShoppingCart;
 import com.example.bookstore.model.User;
 import com.example.bookstore.repository.shoppingcart.ShoppingCartRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-
 import java.util.Collections;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class ShoppingCartServiceImpl implements ShoppingCartService {
+    private static final String NO_CART_EXCEPTION = "Can't find a shopping cart";
     private BookService bookService;
     private ShoppingCartRepository shoppingCartRepository;
     private UserService userService;
@@ -58,7 +56,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         User user = userService.getUserByAuthentication(authentication);
         if (!cartItemService.getById(id).getShoppingCart().getId().equals(user.getId())) {
             throw new IllegalStateException(
-                    String.format("You don't have an order with %s id", id));
+                    String.format("You don't have an item with %s id", id));
         }
         return cartItemService.update(id, requestDto);
     }
@@ -89,13 +87,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItemService.deleteCartItem(id);
     }
 
-    private ShoppingCart getOrCreateShoppingCart(User user) {;
+    private ShoppingCart getOrCreateShoppingCart(User user) {
         Optional<ShoppingCart> optional = shoppingCartRepository.findById(user.getId());
         if (optional.isEmpty()) {
             return addShoppingCartToUser(user);
         }
         return shoppingCartRepository.findById(user.getId())
-                .orElseThrow(()-> new EntityNotFoundException("Can't find a shopping cart or it is empty."));
+                .orElseThrow(() -> new EntityNotFoundException(NO_CART_EXCEPTION));
     }
 
     private Book getBookIfExists(CreateCartItemRequestDto requestDto) {

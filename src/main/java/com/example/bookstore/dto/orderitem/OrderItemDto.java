@@ -1,8 +1,6 @@
-package com.example.bookstore.dto.orderItem;
+package com.example.bookstore.dto.orderitem;
 
 import com.example.bookstore.dto.book.BookDtoWithoutCategoryIds;
-import com.example.bookstore.model.Book;
-
 import java.math.BigDecimal;
 
 public record OrderItemDto(

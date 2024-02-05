@@ -4,7 +4,9 @@ import com.example.bookstore.dto.mapper.OrderItemMapper;
 import com.example.bookstore.model.CartItem;
 import com.example.bookstore.model.Order;
 import com.example.bookstore.model.OrderItem;
-import com.example.bookstore.repository.orderItem.OrderItemRepository;
+import com.example.bookstore.repository.orderitem.OrderItemRepository;
+import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,12 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public OrderItem save(OrderItem orderItem) {
         return orderItemRepository.save(orderItem);
+    }
+
+    @Override
+    public void deleteOrderItems(Set<OrderItem> orderItemList) {
+        List<Long> ids = orderItemList.stream().map(OrderItem::getId).toList();
+        orderItemRepository.deleteAllById(ids);
     }
 
 }

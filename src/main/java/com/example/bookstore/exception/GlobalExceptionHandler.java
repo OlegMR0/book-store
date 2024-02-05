@@ -92,6 +92,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         body.put("message", exception.getMessage());
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
-
-
 }
