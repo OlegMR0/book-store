@@ -18,6 +18,5 @@ public interface OrderMapper {
     @Mapping(target = "shippingAddress", source = "shippingAddress")
     OrderResponseDtoWithoutItems toResponseDtoWithoutItems(Order order);
 
-
     OrderResponseDto toResponseDto(Order order);
 }
