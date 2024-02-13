@@ -5,6 +5,7 @@ import com.example.bookstore.dto.cartitem.CreateCartItemRequestDto;
 import com.example.bookstore.dto.shoppingcart.ShoppingCartDto;
 import com.example.bookstore.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Shopping Cart Controller")
 @RestController
 @RequestMapping("/cart")
 @AllArgsConstructor

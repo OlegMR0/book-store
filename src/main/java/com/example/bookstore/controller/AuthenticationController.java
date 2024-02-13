@@ -32,7 +32,7 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "400", description = "Bad request - Invalid parameters"),
             @ApiResponse(responseCode = "409", description = "User with this email already exists")
     })
-    @PostMapping
+    @PostMapping("/register")
     public RegisterUserResponseDto register(
             @RequestBody @Valid RegisterUserRequestDto registerUserRequestDto)
             throws RegistrationException {

@@ -1,14 +1,12 @@
-package com.example.bookstore.repository.book;
+package com.example.bookstore.repository.book.searching;
 
 import com.example.bookstore.model.Book;
-import com.example.bookstore.repository.SpecificationBuilder;
-import com.example.bookstore.repository.SpecificationProviderManager;
-import com.example.bookstore.repository.book.searching.BookSearchParameters;
 import java.util.Arrays;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 @AllArgsConstructor
 @Component
@@ -17,6 +15,7 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book, Book
     private static final String ISBN_KEY_SPECIFICATION = "isbn";
     private static final String PRICE_KEY_SPECIFICATION = "price";
     private static final String TITLE_KEY_SPECIFICATION = "title";
+    private static final String CATEGORY_KEY_SPECIFICATION = "categories";
     private SpecificationProviderManager<Book> specificationProviderManager;
 
     @Override
@@ -32,19 +31,17 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book, Book
                 PRICE_KEY_SPECIFICATION));
         specification = specification.and(parseListToSpecification(searchParameters.getTitle(),
                 TITLE_KEY_SPECIFICATION));
+        specification = specification.and(parseListToSpecification(searchParameters.getCategories(),
+                CATEGORY_KEY_SPECIFICATION));
         return specification;
     }
 
     private Specification<Book> parseListToSpecification(List<String> list, String key) {
-        if (isListNotEmpty(list)) {
+        if (!CollectionUtils.isEmpty(list) || key.equals(CATEGORY_KEY_SPECIFICATION)) {
             Specification<Book> specification = specificationProviderManager
                     .getSpecificationProviderByKey(key).getSpecification(list);
             return specification;
         }
         return Specification.where(null);
-    }
-
-    private boolean isListNotEmpty(List<String> list) {
-        return list != null && !list.isEmpty();
     }
 }

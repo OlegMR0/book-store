@@ -62,6 +62,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional
     public ShoppingCartDto getShoppingCartDto(Authentication authentication,
                                               Pageable pageable) {
         User user = userService.getUserByAuthentication(authentication);
