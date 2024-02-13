@@ -1,6 +1,5 @@
 package com.example.bookstore.repository.book.searching;
 
-import com.example.bookstore.repository.SearchParameters;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +10,7 @@ public class BookSearchParameters extends SearchParameters {
     private List<String> title;
     private List<String> author;
     private List<String> isbn;
+    private List<String> categories;
     private String priceFrom;
     private String priceTo;
 }

@@ -1,7 +1,6 @@
 package com.example.bookstore.repository.book.searching;
 
 import com.example.bookstore.model.Book;
-import com.example.bookstore.repository.SpecificationProvider;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

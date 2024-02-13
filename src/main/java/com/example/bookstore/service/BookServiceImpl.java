@@ -5,9 +5,9 @@ import com.example.bookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.example.bookstore.dto.book.CreateBookRequestDto;
 import com.example.bookstore.dto.mapper.BookMapper;
 import com.example.bookstore.model.Book;
-import com.example.bookstore.repository.SpecificationBuilder;
 import com.example.bookstore.repository.book.BookRepository;
 import com.example.bookstore.repository.book.searching.BookSearchParameters;
+import com.example.bookstore.repository.book.searching.SpecificationBuilder;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -71,6 +71,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> search(BookSearchParameters searchParameters) {
+
         return bookRepository.findAll(specificationBuilder.build(searchParameters))
                 .stream()
                 .map(bookMapper::toDto)
