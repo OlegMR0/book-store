@@ -1,0 +1,33 @@
+version: '2.24'
+
+services:
+  book_db:
+    image: mysql:latest
+    restart: always
+    env_file: .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DB
+    ports:
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_INNER_PORT
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "book_db"]
+      interval: 1s
+      timeout: 15s
+      retries: 10
+
+  book_app:
+    container_name: book_app
+    restart: always
+    ports:
+      - $APPLICATION_LOCAL_PORT:$APPLICATION_INNER_PORT
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+       book_db:
+           condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: $APPLICATION_DB_URL
+      SPRING_DATASOURCE_USERNAME: $MYSQLDB_USER
+      SPRING_DATASOURCE_PASSWORD: $MYSQLDB_PASSWORD
+      JWT_SIGNATURE_KEY: $APPLICATION_JWT_KEY
