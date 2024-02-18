@@ -28,7 +28,7 @@ services:
        book_db:
            condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://book_db:3306/MYSQLDB_DB
+      SPRING_DATASOURCE_URL: jdbc:mysql://book_db:3306/$MYSQLDB_DB
       SPRING_DATASOURCE_USERNAME: $MYSQLDB_USER
       SPRING_DATASOURCE_PASSWORD: $MYSQLDB_PASSWORD
       JWT_SIGNATURE_KEY: $APPLICATION_JWT_KEY
