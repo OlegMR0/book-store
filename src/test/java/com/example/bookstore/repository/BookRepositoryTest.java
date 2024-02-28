@@ -28,22 +28,10 @@ import java.util.Set;
 class BookRepositoryTest {
     @Autowired
     private BookRepository bookRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @BeforeAll
-    static void setup() {
-    }
-
-    @BeforeEach
-    void setUp() {
-    }
-
 
     @AfterEach
     void tearDown() {
         bookRepository.deleteAll();
-
     }
 
     @Test
