@@ -36,6 +36,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
@@ -85,7 +86,7 @@ class BookServiceTest {
     @Test
     @DisplayName("Find a book by a negative id")
     void findById_NegativeId_ExpectException() {
-        when(bookRepository.findById(-2L)).thenThrow(new EntityNotFoundException("Can't find book by id " + -2L));
+        when(bookRepository.findById(-2L)).thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class, () -> bookService.findById(-2L));
     }
