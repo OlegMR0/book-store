@@ -1,0 +1,2 @@
+INSERT INTO books (id, title, author, isbn, price) values (1, "TITLE", "Author", "12321321321", 121);
+INSERT INTO books (id, title, author, isbn, price) values (2, "another one", "personally", "32131", 177);
