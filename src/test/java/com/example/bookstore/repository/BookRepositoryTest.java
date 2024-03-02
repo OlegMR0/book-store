@@ -1,13 +1,16 @@
 package com.example.bookstore.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.example.bookstore.model.Book;
 import com.example.bookstore.model.Category;
 import com.example.bookstore.repository.book.BookRepository;
-import com.example.bookstore.repository.category.CategoryRepository;
-import liquibase.pro.packaged.B;
-import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,12 +22,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
-
-import javax.sql.DataSource;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -53,7 +50,7 @@ class BookRepositoryTest {
     @Test
     @DisplayName("Find book with a category")
 
-    @Sql(scripts = "/db/category/delete-categories.sql",
+    @Sql(scripts = "/db/category/delete-categories-from-books.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Sql(scripts = "/db/category/add-drama-category.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -69,10 +66,9 @@ class BookRepositoryTest {
         assertTrue(EqualsBuilder.reflectionEquals(expected, actual.get()));
     }
 
-
     @Test
     @DisplayName("Find books with categories by ids")
-    @Sql(scripts = "/db/category/delete-categories.sql",
+    @Sql(scripts = "/db/category/delete-categories-from-books.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Sql(scripts = "/db/category/add-drama-category.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -108,19 +104,19 @@ class BookRepositoryTest {
 
     @Test
     @DisplayName("Find all books by category id")
-    @Sql(scripts = "/db/category/delete-categories.sql",
+    @Sql(scripts = "/db/category/delete-categories-from-books.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Sql(scripts = {
             "/db/category/add-drama-category.sql",
             "/db/category/add-another-category.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void findAllByCategoriesId_BooksWithDifferentCategory_ExpectedBookWithSpecificCategory() {
-        Book bookOne = getDefaultBookOne();
-        Book bookTwo = getDefaultBookTwo();
         Category firstCategory = new Category();
         firstCategory.setId(1L);
         Category secondCategory = new Category();
         secondCategory.setId(2L);
+        Book bookOne = getDefaultBookOne();
+        Book bookTwo = getDefaultBookTwo();
         bookOne.setCategories(Set.of(firstCategory));
         bookTwo.setCategories(Set.of(secondCategory));
         bookRepository.save(bookOne);
