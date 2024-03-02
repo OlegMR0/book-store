@@ -3,6 +3,7 @@ package com.example.bookstore.dto.mapper;
 import com.example.bookstore.dto.category.CategoryResponseDto;
 import com.example.bookstore.dto.category.CreateCategoryRequestDto;
 import com.example.bookstore.model.Category;
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
@@ -28,6 +29,9 @@ public interface CategoryMapper {
 
     @Named("getCategoriesByIds")
     default Set<Category> getCategoriesByIds(Set<Long> categoryIds) {
+        if (categoryIds == null) {
+            return Collections.emptySet();
+        }
         return categoryIds.stream()
                 .map(id -> {
                     Category newCategory = new Category();

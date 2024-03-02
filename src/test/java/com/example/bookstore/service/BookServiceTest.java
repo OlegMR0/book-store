@@ -1,42 +1,32 @@
 package com.example.bookstore.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+
 import com.example.bookstore.dto.book.BookDto;
 import com.example.bookstore.dto.book.CreateBookRequestDto;
 import com.example.bookstore.dto.mapper.BookMapper;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.book.BookRepository;
 import com.example.bookstore.repository.book.searching.BookSearchParameters;
-import com.example.bookstore.repository.book.searching.BookSpecificationBuilder;
-import com.example.bookstore.repository.book.searching.SearchParameters;
 import com.example.bookstore.repository.book.searching.SpecificationBuilder;
-import com.example.bookstore.repository.book.searching.TitleSpecificationProvider;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
-import liquibase.pro.packaged.T;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
@@ -106,14 +96,17 @@ class BookServiceTest {
     void update_NonExistingBook_ExpectException() {
         when(bookRepository.existsById(anyLong())).thenReturn(false);
 
-        assertThrows(EntityNotFoundException.class, () -> bookService.update(71L, getDefaultCreateBookRequestDto()));
+        assertThrows(EntityNotFoundException.class,
+                () -> bookService.update(71L, getDefaultCreateBookRequestDto()));
     }
 
     @Test
     @DisplayName("Search books by specific parameters")
     void search_Author_ExpectBookWithSpecificAuthor() {
         String author = "Vasyl";
-        Specification<Book> authorSpecification = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("author"), String.format("%%%s%%", author));
+        Specification<Book> authorSpecification = (root, query, criteriaBuilder) -> {
+            return criteriaBuilder.like(root.get("author"), String.format("%%%s%%", author));
+        };
         BookSearchParameters searchParameters = new BookSearchParameters();
         searchParameters.setAuthor(List.of(author));
         Book book = getDefaultBook();

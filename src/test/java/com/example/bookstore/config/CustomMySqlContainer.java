@@ -4,7 +4,7 @@ import org.testcontainers.containers.MySQLContainer;
 
 public class CustomMySqlContainer {
     private static final String DB_VERSION = "mysql:5.7.24";
-    public static MySQLContainer mySQLContainer;
+    private static MySQLContainer mySQLContainer;
 
     static {
         mySQLContainer = new MySQLContainer(DB_VERSION)
@@ -13,7 +13,4 @@ public class CustomMySqlContainer {
                 .withPassword("sa");
         mySQLContainer.start();
     }
-
-
-
 }
