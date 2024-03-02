@@ -1,5 +1,8 @@
 package com.example.bookstore.controller;
 
+import com.example.bookstore.util.TestUtilities;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -44,7 +47,7 @@ class BookControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private BookRepository bookRepository;
+    private TestUtilities testUtilities;
 
     @BeforeAll
     static void beforeAll(@Autowired WebApplicationContext webApplicationContext) {
@@ -78,7 +81,7 @@ class BookControllerTest {
         MvcResult mvcResult = mockMvc.perform(get("/books"))
                 .andReturn();
 
-        List<BookDto> actual = Arrays.asList(getObjectFromMvcResult(mvcResult, BookDto[].class));
+        List<BookDto> actual = Arrays.asList(testUtilities.getObjectFromMvcResult(mvcResult, BookDto[].class));
         assertEquals(expected, actual);
     }
 
@@ -92,7 +95,7 @@ class BookControllerTest {
         BookDto expected = getFirstDefaultBookDto();
 
         MvcResult mvcResult = mockMvc.perform(get("/books/1")).andReturn();
-        BookDto actual = getObjectFromMvcResult(mvcResult, BookDto.class);
+        BookDto actual = testUtilities.getObjectFromMvcResult(mvcResult, BookDto.class);
         assertTrue(EqualsBuilder.reflectionEquals(expected, actual, "categoryIds"));
     }
 
@@ -123,7 +126,7 @@ class BookControllerTest {
         MvcResult mvcResult = mockMvc.perform(get("/books/search?title=titl&categories=1"))
                 .andReturn();
 
-        BookDto actual = getObjectFromMvcResult(mvcResult, BookDto[].class)[0];
+        BookDto actual = testUtilities.getObjectFromMvcResult(mvcResult, BookDto[].class)[0];
         assertEquals(expected, actual);
     }
 
@@ -137,7 +140,7 @@ class BookControllerTest {
         MvcResult mvcResult = mockMvc
                 .perform(post("/books").content(json).contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-        BookDto actual = getObjectFromMvcResult(mvcResult, BookDto.class);
+        BookDto actual = testUtilities.getObjectFromMvcResult(mvcResult, BookDto.class);
 
         assertTrue(EqualsBuilder.reflectionEquals(expected, actual, "categoryIds", "id"));
     }
@@ -155,7 +158,7 @@ class BookControllerTest {
         MvcResult mvcResult = mockMvc
                 .perform(put("/books/1").content(json).contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-        BookDto actual = getObjectFromMvcResult(mvcResult, BookDto.class);
+        BookDto actual = testUtilities.getObjectFromMvcResult(mvcResult, BookDto.class);
         assertTrue(EqualsBuilder.reflectionEquals(expected, actual, "categoryIds"));
     }
 
@@ -166,11 +169,6 @@ class BookControllerTest {
     void deleteBook() throws Exception {
         mockMvc.perform(delete("/books/1"))
                 .andExpect(status().isOk());
-    }
-
-    private <T> T getObjectFromMvcResult(MvcResult mvcResult, Class<T> clazz)
-            throws UnsupportedEncodingException, JsonProcessingException {
-        return objectMapper.readValue(mvcResult.getResponse().getContentAsString(), clazz);
     }
 
     private CreateBookRequestDto getDefaultCreateBookRequestDto() {
