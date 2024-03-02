@@ -1,13 +1,10 @@
 package com.example.bookstore.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MvcResult;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
 
 @Component
 @AllArgsConstructor

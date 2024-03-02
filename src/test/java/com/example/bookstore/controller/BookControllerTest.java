@@ -1,8 +1,5 @@
 package com.example.bookstore.controller;
 
-import com.example.bookstore.util.TestUtilities;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -13,11 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.bookstore.dto.book.BookDto;
 import com.example.bookstore.dto.book.CreateBookRequestDto;
-import com.example.bookstore.repository.book.BookRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.example.bookstore.util.TestUtilities;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,8 +45,13 @@ class BookControllerTest {
     private TestUtilities testUtilities;
 
     @BeforeAll
-    static void beforeAll(@Autowired WebApplicationContext webApplicationContext) {
+    static void beforeAll(@Autowired WebApplicationContext webApplicationContext,
+                          @Autowired DataSource dataSource) {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScript(new ClassPathResource("db/category/delete-categories-from-books.sql"));
+        populator.addScript(new ClassPathResource("db/book/delete-books.sql"));
+        populator.execute(dataSource);
     }
 
     @AfterEach
@@ -81,12 +81,13 @@ class BookControllerTest {
         MvcResult mvcResult = mockMvc.perform(get("/books"))
                 .andReturn();
 
-        List<BookDto> actual = Arrays.asList(testUtilities.getObjectFromMvcResult(mvcResult, BookDto[].class));
+        List<BookDto> actual = Arrays.asList(testUtilities
+                .getObjectFromMvcResult(mvcResult, BookDto[].class));
         assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("Find book by id ")
+    @DisplayName("Find a book by id ")
     @WithMockUser(username = "user", roles = "USER")
     @Sql(scripts = {
             "/db/book/add-books.sql"},
@@ -150,10 +151,11 @@ class BookControllerTest {
     @WithMockUser(username = "user", roles = "ADMIN")
     @Sql(scripts = {"/db/book/add-books.sql"})
     void updateBook_NewTitle_ExpectUpdatedBook() throws Exception {
+        String newTitle = "new title";
         CreateBookRequestDto requestDto = getDefaultCreateBookRequestDto();
-        requestDto.setTitle("new title");
+        requestDto.setTitle(newTitle);
         BookDto expected = getFirstDefaultBookDto();
-        expected.setTitle("new title");
+        expected.setTitle(newTitle);
         String json = objectMapper.writeValueAsString(requestDto);
         MvcResult mvcResult = mockMvc
                 .perform(put("/books/1").content(json).contentType(MediaType.APPLICATION_JSON))
