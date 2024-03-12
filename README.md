@@ -11,3 +11,14 @@ Looking further users can explore available books, filtering them by specific pa
 
 While for the admins offers complete control, so this role enables you to manage books and categories, with the ability to create, edit or delete them in a convenient way. The same applies to orders, which you can accompany during the entire process till completely delivered.
 Note that the admin also has all features available to users.
+
+
+## 🔮Tech Stack
+
+- Java 17
+- Maven
+- Spring: Boot, Security, Data JPA
+- Docker
+- MySQL, Hibernate, Liquibase
+- JUnit, Mockito, TestContainers
+- Swagger
