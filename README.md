@@ -36,6 +36,8 @@ While for the admins offers complete control, so this role enables you to manage
 ```
 
 <details><summary>JSON Request sample</summary>
+  
+  ```json
 {
   "email": "customer@mail.com",
   "password": "secret",
@@ -44,6 +46,7 @@ While for the admins offers complete control, so this role enables you to manage
   "lastName": "Customer",
   "shippingAddress": "Springfield"
 }
+  ```
 </details>
 
 #### Authenticate user and generate JWT token
@@ -53,12 +56,14 @@ While for the admins offers complete control, so this role enables you to manage
 ```
 
 <details><summary>JSON Request sample</summary>
+  
+  ```json
 {
   "email": "admin@mail.com",
   "password": "securePassword123"
 }
 </details>
-
+```
 > [!IMPORTANT]
 > ### Next endpoints require authentication!
 
@@ -102,6 +107,8 @@ While for the admins offers complete control, so this role enables you to manage
   POST /books
 ```
 <details><summary>JSON Request sample</summary>
+
+  ```json
 {
   "title": "Black Raven",
   "author": "Vasyl Shkliar",
@@ -109,10 +116,10 @@ While for the admins offers complete control, so this role enables you to manage
   "isbn": "9781429964371",
   "description": "string",
   "categoryIds": [
-    
   ],
   "coverImage": "string"
 }
+```
 > [!TIP]
 > You can easily just skip unnecessary params.
 </details>
@@ -127,6 +134,8 @@ While for the admins offers complete control, so this role enables you to manage
 | `id`      | **Required**. Id of book to be searched |
 
 <details><summary>JSON Request sample</summary>
+  
+  ```json
 {
   "title": "Black Raven",
   "author": "Vasyl Shkliar",
@@ -139,7 +148,7 @@ While for the admins offers complete control, so this role enables you to manage
   "coverImage": "string"
 }
 </details>
-
+```
 #### Delete an existing book with the provided id.
 
 
