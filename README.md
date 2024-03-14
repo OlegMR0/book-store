@@ -24,59 +24,67 @@ While for the admins offers complete control, so this role enables you to manage
 - MySQL, Hibernate, Liquibase
 - JUnit, Mockito, TestContainers
 - Swagger
+  
 
-- 
+
 ## API Reference
+> [!NOTE]
+> Next endpoints don't require authentication.
+
+- ### Authentication Controller
+    - #### Register a new user
+
+
+      ```http
+      POST /auth/register
+      ```
+      <details><summary>JSON Request sample</summary>
+        
+         ```json
+          
+      {
+        "email": "customer@mail.com",
+        "password": "secret",
+        "repeatPassword": "secret",
+        "firstName": "Important",
+        "lastName": "Customer",
+        "shippingAddress": "Springfield"
+      }
+        ```
+      
+      </details>
+
+    - #### Authenticate user and generate JWT token
+    
+      ```http
+      POST /auth/login
+      ```
+      
+      <details><summary>JSON Request sample</summary>
+        
+        ```json
+      {
+        "email": "admin@mail.com",
+        "password": "securePassword123"
+      }
+        ```
+      </details>
+&emsp;
+
+___
 > [!IMPORTANT]
-> ### Next endpoints don't require authentication.
-#### Register a new user
+> Next endpoints require authentication!
+
+### Returns all available(not deleted) books
 
 ```http
-  POST /auth/register
+GET /books
 ```
 
-<details><summary>JSON Request sample</summary>
-  
-  ```json
-{
-  "email": "customer@mail.com",
-  "password": "secret",
-  "repeatPassword": "secret",
-  "firstName": "Important",
-  "lastName": "Customer",
-  "shippingAddress": "Springfield"
-}
-  ```
-</details>
-
-#### Authenticate user and generate JWT token
+### Returns a book as per the identifier
 
 ```http
-  POST /auth/login
-```
-
-<details><summary>JSON Request sample</summary>
-  
-  ```json
-{
-  "email": "admin@mail.com",
-  "password": "securePassword123"
-}
-</details>
-```
-> [!IMPORTANT]
-> ### Next endpoints require authentication!
-
-#### Returns all available(not deleted) books
-
-```http
-  GET /books
-```
-
-#### Returns a book as per the identifier
-
-```http
-  GET /books/{id}
+GET /books/{id}
 ```
 | Parameter | Description                       |
 | :-------- | :-------------------------------- |
@@ -84,10 +92,10 @@ While for the admins offers complete control, so this role enables you to manage
 
 
 
-#### Find books by specific parameters
+### Find books by specific parameters
 
 ```http
-  GET /books/search
+GET /books/search
 ```
 | Parameter | Description                       |
 | :-------- | :-------------------------------- |
@@ -101,10 +109,10 @@ While for the admins offers complete control, so this role enables you to manage
 > [!IMPORTANT]
 > The next endpoints in this chapter can only be accessed with admin role!
 
-#### Create a new book with the provided body
+### Create a new book with the provided body
 
 ```http
-  POST /books
+POST /books
 ```
 <details><summary>JSON Request sample</summary>
 
@@ -124,10 +132,10 @@ While for the admins offers complete control, so this role enables you to manage
 > You can easily just skip unnecessary params.
 </details>
 
-#### Update an existing book with the provided id and body
+### Update an existing book with the provided id and body
 
 ```http
-  PUT /books/{id}
+PUT /books/{id}
 ```
 | Parameter | Description                       |
 | :-------- | :-------------------------------- |
@@ -149,11 +157,11 @@ While for the admins offers complete control, so this role enables you to manage
 }
 </details>
 ```
-#### Delete an existing book with the provided id.
+### Delete an existing book with the provided id.
 
 
 ```http
-  DELETE /books/{id}
+DELETE /books/{id}
 ```
 | Parameter | Description                       |
 | :-------- | :-------------------------------- |
