@@ -13,8 +13,6 @@ While for the admins offers complete control, so this role enables you to manage
 > [!NOTE]
 > The admin also has all features available to users.
 
-
-
 ## 🔮Tech Stack
 
 - Java 17
@@ -25,7 +23,6 @@ While for the admins offers complete control, so this role enables you to manage
 - JUnit, Mockito, TestContainers
 - Swagger
   
-
 
 ## API Reference
 > [!NOTE]
@@ -75,97 +72,106 @@ ___
 > [!IMPORTANT]
 > Next endpoints require authentication!
 
-### Returns all available(not deleted) books
+- ### Book Controller
+  
+   - #### Returns all available(not deleted) books
+    
+    ```http
+    GET /books
+    ```
+    
+   - #### Returns a book as per the identifier
+    
+    ```http
+    GET /books/{id}
+    ```
+    | Parameter | Description                       |
+    | :-------- | :-------------------------------- |
+    | `id`      | **Required**. Id of book to be searched |
+    
+    
+    
+   - #### Find books by specific parameters
+    
+    ```http
+    GET /books/search
+    ```
+  <details><summary>HTTP Request sample</summary>
+    
+  ```HTTP
+  GET /books/search?title=raven&categories=1&author=vasyl
+    ```
 
-```http
-GET /books
-```
-
-### Returns a book as per the identifier
-
-```http
-GET /books/{id}
-```
-| Parameter | Description                       |
-| :-------- | :-------------------------------- |
-| `id`      | **Required**. Id of book to be searched |
-
-
-
-### Find books by specific parameters
-
-```http
-GET /books/search
-```
-| Parameter | Description                       |
-| :-------- | :-------------------------------- |
-| `title`   | Title of the book to be searched. The flexible parameter, returns all similar options.|
-| `author`   | Author of the book to be searched. Might be plural.|
-| `Isbn`   | International Standard Book Number of the book to be searched. Might be plural.|
-| `categories`   | Category id of the book to be searched. Might be plural.|
-| `priceFrom`   | Minimal price of the book to be searched.|
-| `priceTo`   | Minimal price of the book to be searched.|
-
+    </details>
+    
+    | Parameter | Description                       |
+    | :-------- | :-------------------------------- |
+    | `title`   | Title of the book to be searched. The flexible parameter, returns all similar options.|
+    | `author`   | Author of the book to be searched.|
+    | `isbn`   | International Standard Book Number of the book to be searched.|
+    | `categories`   | Category id of the book to be searched.|
+    | `priceFrom`   | Minimal price of the book to be searched.|
+    | `priceTo`   | Minimal price of the book to be searched.|
+    
 > [!IMPORTANT]
 > The next endpoints in this chapter can only be accessed with admin role!
 
-### Create a new book with the provided body
-
-```http
-POST /books
-```
-<details><summary>JSON Request sample</summary>
-
-  ```json
-{
-  "title": "Black Raven",
-  "author": "Vasyl Shkliar",
-  "price": 150,
-  "isbn": "9781429964371",
-  "description": "string",
-  "categoryIds": [
-  ],
-  "coverImage": "string"
-}
-```
-> [!TIP]
-> You can easily just skip unnecessary params.
-</details>
-
-### Update an existing book with the provided id and body
-
-```http
-PUT /books/{id}
-```
-| Parameter | Description                       |
-| :-------- | :-------------------------------- |
-| `id`      | **Required**. Id of book to be searched |
-
-<details><summary>JSON Request sample</summary>
-  
-  ```json
-{
-  "title": "Black Raven",
-  "author": "Vasyl Shkliar",
-  "price": 150,
-  "isbn": "9781429964371",
-  "description": "string",
-  "categoryIds": [
+-
+  - #### Create a new book with the provided body
     
-  ],
-  "coverImage": "string"
-}
-</details>
-```
-### Delete an existing book with the provided id.
+    ```http
+    POST /books
+    ```
+      <details><summary>JSON Request sample</summary>
+        
+      ```json
+        {
+          "title": "Black Raven",
+          "author": "Vasyl Shkliar",
+          "price": 150,
+          "isbn": "9781429964371",
+          "description": "string",
+          "categoryIds": [
+          ],
+          "coverImage": "string"
+        }
+      ```
+      </details>
 
-
-```http
-DELETE /books/{id}
-```
-| Parameter | Description                       |
-| :-------- | :-------------------------------- |
-| `id`      | **Required**. Id of book to be searched |
+   - #### Update an existing book with the provided id and body
+    
+     ```http
+     PUT /books/{id}
+     ```
+        | Parameter | Description                       |
+        | :-------- | :-------------------------------- |
+        | `id`      | **Required**. Id of book to be searched |
+      
+      <details><summary>JSON Request sample</summary>
+        
+      ```json
+      {
+        "title": "Black Raven",
+        "author": "Vasyl Shkliar",
+        "price": 150,
+        "isbn": "9781429964371",
+        "description": "string",
+        "categoryIds": [
+          
+        ],
+        "coverImage": "string"
+      }
+      ```
+      </details>
+      
+   - #### Delete an existing book with the provided id.
+    
+      ```http
+      DELETE /books/{id}
+      ```
+      | Parameter | Description                       |
+      | :-------- | :-------------------------------- |
+      | `id`      | **Required**. Id of book to be searched |
 
 
 
