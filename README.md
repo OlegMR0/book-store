@@ -206,6 +206,7 @@ ___
 > [!IMPORTANT]
 > The next endpoints in this chapter can only be accessed with **admin** role!
 
+-
   - #### Create a new category with the provided body
     
     ```http
@@ -221,7 +222,7 @@ ___
       ```
       </details>
       
-         - #### Update an existing category with the provided id and body
+   - #### Update an existing category with the provided id and body
     
      ```http
      PUT /categories/{id}
@@ -240,7 +241,7 @@ ___
       ```
       </details>
 
-         - #### Delete an existing category with the provided id.
+   - #### Delete an existing category with the provided id.
     
       ```http
       DELETE /categories/{id}
