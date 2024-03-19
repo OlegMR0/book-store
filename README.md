@@ -87,7 +87,7 @@ ___
     ```
     | Parameter | Description                       |
     | :-------- | :-------------------------------- |
-    | `id`      | **Required**. Id of book to be searched |
+    | `id`      | **Required**. Id of the book to be searched |
     
     
     
@@ -99,22 +99,25 @@ ___
   <details><summary>HTTP Request sample</summary>
     
   ```HTTP
-  GET /books/search?title=raven&categories=1&author=vasyl
+  GET /books/search?title=raven&category=1&author=vasyl
     ```
-
     </details>
     
+    <details><summary>Parameters to specify</summary>
+
     | Parameter | Description                       |
     | :-------- | :-------------------------------- |
     | `title`   | Title of the book to be searched. The flexible parameter, returns all similar options.|
     | `author`   | Author of the book to be searched.|
     | `isbn`   | International Standard Book Number of the book to be searched.|
-    | `categories`   | Category id of the book to be searched.|
+    | `category`   | Category id of the book to be searched.|
     | `priceFrom`   | Minimal price of the book to be searched.|
     | `priceTo`   | Minimal price of the book to be searched.|
+  
+   </details>
     
 > [!IMPORTANT]
-> The next endpoints in this chapter can only be accessed with admin role!
+> The next endpoints in this chapter can only be accessed with **admin** role!
 
 -
   - #### Create a new book with the provided body
@@ -145,7 +148,7 @@ ___
      ```
         | Parameter | Description                       |
         | :-------- | :-------------------------------- |
-        | `id`      | **Required**. Id of book to be searched |
+        | `id`      | **Required**. Id of the book to be updated |
       
       <details><summary>JSON Request sample</summary>
         
@@ -171,15 +174,81 @@ ___
       ```
       | Parameter | Description                       |
       | :-------- | :-------------------------------- |
-      | `id`      | **Required**. Id of book to be searched |
+      | `id`      | **Required**. Id of the book to be deleted |
 
 
+- ### Category Controller
+  
+   - #### Returns all available(not deleted) categories
+    
+    ```http
+    GET /categories
+    ```
 
+   - #### Returns a category as per the identifier
+    
+    ```http
+    GET /categories/{id}
+    ```
+    | Parameter | Description                       |
+    | :-------- | :-------------------------------- |
+    | `id`      | **Required**. Id of the category to be searched |
 
+   - #### Returns a list of books for a specific category
+    
+    ```http
+    GET /categories/{id}/books
+    ```
+    | Parameter | Description                       |
+    | :-------- | :-------------------------------- |
+    | `id`      | **Required**. Id of the book's category to be searched |
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
+> [!IMPORTANT]
+> The next endpoints in this chapter can only be accessed with **admin** role!
+
+  - #### Create a new category with the provided body
+    
+    ```http
+    POST /categories
+    ```
+      <details><summary>JSON Request sample</summary>
+        
+      ```json
+        {
+          "name": "Crime",
+          "description": "some info"
+        }
+      ```
+      </details>
+      
+         - #### Update an existing category with the provided id and body
+    
+     ```http
+     PUT /categories/{id}
+     ```
+        | Parameter | Description                       |
+        | :-------- | :-------------------------------- |
+        | `id`      | **Required**. Id of the category to be updated |
+      
+      <details><summary>JSON Request sample</summary>
+        
+      ```json
+        {
+          "name": "Crime",
+          "description": "some info"
+        }
+      ```
+      </details>
+
+         - #### Delete an existing category with the provided id.
+    
+      ```http
+      DELETE /categories/{id}
+      ```
+      | Parameter | Description                       |
+      | :-------- | :-------------------------------- |
+      | `id`      | **Required**. Id of the category to be deleted |
+
 
 
 
