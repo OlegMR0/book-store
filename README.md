@@ -67,7 +67,6 @@ While for the admins offers complete control, so this role enables you to manage
         ```
       </details>
 &emsp;
-
 ___
 > [!IMPORTANT]
 > Next endpoints require authentication!
@@ -75,16 +74,26 @@ ___
 - ### Book Controller
   
    - #### Returns all available(not deleted) books
-    
-    ```http
-    GET /books
-    ```
-    
+  
+      ```http
+      GET /books
+      ```
+      _This endpoint supports paging and sorting._ 
+      <details><summary>HTTP Request sample</summary>       
+      
+      ```http
+      GET /books?page=0&size=5&sort=price,desc
+      ``` 
+      </details>
+
+
+
+-
    - #### Returns a book as per the identifier
     
-    ```http
-    GET /books/{id}
-    ```
+      ```http
+      GET /books/{id}
+      ```
     | Parameter | Description                       |
     | :-------- | :-------------------------------- |
     | `id`      | **Required**. Id of the book to be searched |
@@ -92,14 +101,14 @@ ___
     
     
    - #### Find books by specific parameters
-    
-    ```http
-    GET /books/search
-    ```
+      
+      ```http
+      GET /books/search
+      ```
   <details><summary>HTTP Request sample</summary>
     
-  ```HTTP
-  GET /books/search?title=raven&category=1&author=vasyl
+    ```HTTP
+    GET /books/search?title=raven&category=1&author=vasyl
     ```
     </details>
     
@@ -122,9 +131,9 @@ ___
 -
   - #### Create a new book with the provided body
     
-    ```http
-    POST /books
-    ```
+      ```http
+      POST /books
+      ```
       <details><summary>JSON Request sample</summary>
         
       ```json
@@ -143,9 +152,9 @@ ___
 
    - #### Update an existing book with the provided id and body
     
-     ```http
-     PUT /books/{id}
-     ```
+       ```http
+       PUT /books/{id}
+       ```
         | Parameter | Description                       |
         | :-------- | :-------------------------------- |
         | `id`      | **Required**. Id of the book to be updated |
@@ -169,9 +178,9 @@ ___
       
    - #### Delete an existing book with the provided id.
     
-      ```http
-      DELETE /books/{id}
-      ```
+        ```http
+        DELETE /books/{id}
+        ```
       | Parameter | Description                       |
       | :-------- | :-------------------------------- |
       | `id`      | **Required**. Id of the book to be deleted |
@@ -181,24 +190,32 @@ ___
   
    - #### Returns all available(not deleted) categories
     
-    ```http
-    GET /categories
-    ```
-
+      ```http
+      GET /categories
+      ```
+     _This endpoint supports paging and sorting._ 
+      <details><summary>HTTP Request sample</summary>       
+      
+      ```http
+      GET /categories?page=0&size=5&sort=name,asc
+      ``` 
+      </details>
+      
+      
    - #### Returns a category as per the identifier
     
-    ```http
-    GET /categories/{id}
-    ```
+      ```http
+      GET /categories/{id}
+      ```
     | Parameter | Description                       |
     | :-------- | :-------------------------------- |
     | `id`      | **Required**. Id of the category to be searched |
 
    - #### Returns a list of books for a specific category
-    
-    ```http
-    GET /categories/{id}/books
-    ```
+      
+      ```http
+      GET /categories/{id}/books
+      ```
     | Parameter | Description                       |
     | :-------- | :-------------------------------- |
     | `id`      | **Required**. Id of the book's category to be searched |
@@ -251,5 +268,116 @@ ___
       | `id`      | **Required**. Id of the category to be deleted |
 
 
+- ### Shopping Cart Controller
+  
+   - #### Get all items in the shopping cart
+    
+      ```http
+      GET /cart
+      ```
 
+   - #### Add a new item to the shopping cart
+    
+      ```http
+      POST /cart
+      ```
+      <details><summary>JSON Request sample</summary>
+        
+      ```json
+        {
+          "bookId": 9,
+          "quantity": 2
+        }
+      ```
+      </details>
 
+   - #### Update an existing cart item with the provided id and body
+    
+     ```http
+     PUT /cart/cart-items/{id}
+     ```
+        | Parameter | Description                       |
+        | :-------- | :-------------------------------- |
+        | `id`      | **Required**. Id of the cart item to be updated |
+      
+      <details><summary>JSON Request sample</summary>
+        
+      ```json
+        {
+          "bookId": 9,
+          "quantity": 2
+        }
+      ```
+      </details>
+
+   - #### Delete an existing cart item with the provided id
+    
+      ```http
+      DELETE /cart/cart-items/{id}
+      ```
+      | Parameter | Description                       |
+      | :-------- | :-------------------------------- |
+      | `id`      | **Required**. Id of the cart item to be deleted |
+
+- ### Order Controller
+  
+   - #### Retrieve the user's order history
+    
+      ```http
+      GET /orders
+      ```
+   - #### Create a new order for the authenticated user based on the items in the shopping cart
+    
+      ```http
+      POST /orders
+      ```
+
+   - #### Retrieve the items of a specific order
+    
+      ```http
+      GET /orders/{orderId}/items
+      ```
+      | Parameter | Description                       |
+      | :-------- | :-------------------------------- |
+      | `orderId`      | **Required**. Id of the order to be searched |
+
+   - #### Retrieve a specific item from a specific order
+    
+      ```http
+      GET /orders/{orderId}/items/{itemId}
+      ```
+      | Parameter | Description                       |
+      | :-------- | :-------------------------------- |
+      | `orderId`      | **Required**. Id of the order to be searched |
+      | `itemId`      | **Required**. Id of the order item to be searched |     
+
+> [!IMPORTANT]
+> The next endpoints in this chapter can only be accessed with **admin** role!
+
+-
+  - #### Update status by order id
+    
+    ```http
+    PATCH /orders/{id}
+    ```
+      | Parameter | Description                       |
+      | :-------- | :-------------------------------- |
+      | `id`      | **Required**. Id of the order to be updated |
+
+      <details><summary>JSON Request sample</summary>
+        
+      ```json
+        {
+          "status": "CANCELLED"
+        }
+      ```
+      </details>
+
+   - #### Delete an order by id
+    
+      ```http
+      DELETE /orders/{orderId}
+      ```
+      | Parameter | Description                       |
+      | :-------- | :-------------------------------- |
+      | `orderId`      | **Required**. Id of the order to be deleted |
