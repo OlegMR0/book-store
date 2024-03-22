@@ -326,6 +326,15 @@ ___
       ```http
       GET /orders
       ```
+
+     _This endpoint supports paging and sorting._ 
+      <details><summary>HTTP Request sample</summary>       
+      
+      ```http
+      GET /orders?sort=orderDate,desc
+      ``` 
+      </details>
+      
    - #### Create a new order for the authenticated user based on the items in the shopping cart
     
       ```http
@@ -356,14 +365,14 @@ ___
 
 -
   - #### Update status by order id
-    
+
+
     ```http
     PATCH /orders/{id}
     ```
       | Parameter | Description                       |
       | :-------- | :-------------------------------- |
       | `id`      | **Required**. Id of the order to be updated |
-
       <details><summary>JSON Request sample</summary>
         
       ```json
@@ -372,6 +381,13 @@ ___
         }
       ```
       </details>
+    <details><summary>Current possible parameters to specify</summary>
+      
+    - CREATED
+    - COMPLETED
+    - SHIPPED
+    - CANCELLED
+   </details>
 
    - #### Delete an order by id
     
