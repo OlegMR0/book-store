@@ -38,10 +38,9 @@ public class ShoppingCartController {
 
     @GetMapping
     @Operation(summary = "Get all items in the shopping cart")
-    public ShoppingCartDto getShoppingCart(Authentication authentication,
-                                                     Pageable pageable) {
+    public ShoppingCartDto getShoppingCart(Authentication authentication) {
         ShoppingCartDto cartItems = shoppingCartService
-                .getShoppingCartDto(authentication, pageable);
+                .getShoppingCartDto(authentication);
         return cartItems;
     }
 

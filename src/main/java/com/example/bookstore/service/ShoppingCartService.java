@@ -15,9 +15,7 @@ public interface ShoppingCartService {
     CartItemResponseDto updateCartItem(Long id, CreateCartItemRequestDto requestDto,
                                        Authentication authentication);
 
-    ShoppingCartDto getShoppingCartDto(
-            Authentication authentication,
-            Pageable pageable);
+    ShoppingCartDto getShoppingCartDto(Authentication authentication);
 
     ShoppingCart getShoppingCart(User user);
 

@@ -1,5 +1,6 @@
 package com.example.bookstore.exception;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;

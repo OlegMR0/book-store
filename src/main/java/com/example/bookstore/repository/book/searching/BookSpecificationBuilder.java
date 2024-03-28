@@ -31,7 +31,7 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book, Book
                 PRICE_KEY_SPECIFICATION));
         specification = specification.and(parseListToSpecification(searchParameters.getTitle(),
                 TITLE_KEY_SPECIFICATION));
-        specification = specification.and(parseListToSpecification(searchParameters.getCategories(),
+        specification = specification.and(parseListToSpecification(searchParameters.getCategory(),
                 CATEGORY_KEY_SPECIFICATION));
         return specification;
     }

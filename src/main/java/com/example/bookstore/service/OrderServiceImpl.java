@@ -109,7 +109,7 @@ public class OrderServiceImpl implements OrderService {
             Pageable pageable) {
         User user = userService.getUserByAuthentication(authentication);
         List<Long> orderIds = orderRepository.findAllIdsByUser(user, pageable);
-        List<Order> orders = orderRepository.findAllByUserIds(orderIds);
+        List<Order> orders = orderRepository.findAllByUserIds(orderIds, pageable.getSort());
         List<OrderResponseDto> dtos = orders.stream()
                 .map(orderMapper::toResponseDto).toList();
         return dtos;

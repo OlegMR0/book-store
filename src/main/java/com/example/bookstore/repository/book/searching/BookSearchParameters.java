@@ -10,7 +10,7 @@ public class BookSearchParameters extends SearchParameters {
     private List<String> title;
     private List<String> author;
     private List<String> isbn;
-    private List<String> categories;
+    private List<String> category;
     private String priceFrom;
     private String priceTo;
 }

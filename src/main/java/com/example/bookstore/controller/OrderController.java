@@ -42,7 +42,7 @@ public class OrderController {
 
     @Operation(
             summary = "Get orders",
-            description = "Retrieve user's order history."
+            description = "Retrieve the user's order history."
     )
     @GetMapping
     List<OrderResponseDto> getOrders(Authentication authentication, Pageable pageable) {
@@ -61,7 +61,7 @@ public class OrderController {
     }
 
     @Operation(
-            summary = "Get order Item",
+            summary = "Get order item",
             description = "Retrieve a specific item from a specific order."
     )
     @GetMapping("/{orderId}/items/{itemId}")
@@ -72,6 +72,7 @@ public class OrderController {
         return orderService.getOrderItemById(orderId, itemId, authentication);
     }
 
+    @Operation(summary = "Update status by order id")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/{id}")
     OrderResponseDtoWithoutItems updateStatus(
