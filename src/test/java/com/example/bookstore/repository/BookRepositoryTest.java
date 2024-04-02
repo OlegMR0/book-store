@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
@@ -83,7 +84,7 @@ class BookRepositoryTest {
         List<Book> expected = List.of(bookOne, bookTwo);
         List<Long> ids = expected.stream().map(Book::getId).toList();
 
-        List<Book> actual = bookRepository.findAllBooksWithCategoriesByIds(ids);
+        List<Book> actual = bookRepository.findAllBooksWithCategoriesByIds(ids, Sort.unsorted());
 
         assertEquals(expected, actual);
     }

@@ -17,7 +17,6 @@ import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 

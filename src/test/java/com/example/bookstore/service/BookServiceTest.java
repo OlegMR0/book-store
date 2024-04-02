@@ -26,6 +26,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 @ExtendWith(MockitoExtension.class)
@@ -64,7 +65,8 @@ class BookServiceTest {
         Book book = getDefaultBook();
         book.setId(1L);
         when(bookRepository.findAllBookIds(any(Pageable.class))).thenReturn(List.of(1L));
-        when(bookRepository.findAllBooksWithCategoriesByIds(List.of(1L))).thenReturn(List.of(book));
+        when(bookRepository.findAllBooksWithCategoriesByIds(List.of(1L), Sort.unsorted()))
+                .thenReturn(List.of(book));
         BookDto expected = getDefaultBookDto();
         when(bookMapper.toDto(any(Book.class))).thenReturn(expected);
 

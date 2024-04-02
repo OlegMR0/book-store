@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class lCategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
     private CategoryMapper categoryMapper;
 
