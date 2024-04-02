@@ -12,8 +12,8 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_INNER_PORT
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "book_db"]
-      interval: 1s
-      timeout: 15s
+      interval: 20s
+      timeout: 100s
       retries: 10
 
   book_app:
