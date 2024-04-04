@@ -1,5 +1,4 @@
 # Book Store📚 - Your Ultimate Digital Library
-
 RESTful application that allows users or admins to authenticate, interact with books and make orders. 
 
 Service has different activities depending on your role. 
@@ -51,6 +50,15 @@ Hence, you can log in within the user below.
 >
 >securePassword123
 
+___
+### Testing without installation
+Currently, it's available to test the application remotely, as it's deployed on AWS.
+
+http://16.171.249.201/swagger-ui/index.html#/
+
+The predefined admin, mentioned above, is also available to log in.
+
+
 ## 📋API Reference
 > [!NOTE]
 > Next endpoints don't require authentication.
@@ -93,7 +101,6 @@ Hence, you can log in within the user below.
       }
         ```
       </details>
-&emsp;
 ___
 > [!IMPORTANT]
 > Next endpoints require authentication!
@@ -212,7 +219,7 @@ ___
       | :-------- | :-------------------------------- |
       | `id`      | **Required**. Id of the book to be deleted |
 
-
+___
 - ### Category Controller
   
    - #### Returns all available(not deleted) categories
@@ -294,7 +301,7 @@ ___
       | :-------- | :-------------------------------- |
       | `id`      | **Required**. Id of the category to be deleted |
 
-
+___
 - ### Shopping Cart Controller
   
    - #### Get all items in the shopping cart
@@ -346,6 +353,7 @@ ___
       | :-------- | :-------------------------------- |
       | `id`      | **Required**. Id of the cart item to be deleted |
 
+___
 - ### Order Controller
   
    - #### Retrieve the user's order history
