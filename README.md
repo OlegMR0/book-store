@@ -23,8 +23,35 @@ While for the admins offers complete control, so this role enables you to manage
 - JUnit, Mockito, TestContainers
 - Swagger
   
+## 🛠Installation
 
-## API Reference
+The application is dockerized, so the easiest way to run the project is using docker-compose file.
+
+ - Ensure you have installed and started Docker Engine.
+ - Download ZIP or clone the project using git.
+ - Open the terminal and navigate to root of the unpacked project folder.
+ - Create and specify **.env** file with variables you need. Use **.env.template**.
+ - Run the following command in the terminal
+   ```
+   docker-compose up
+   ```
+
+> [!TIP]
+> Using Swagger, you need to provide a JWT token, given as a response after successful login, by clicking on the green button ***Authorize***.
+![image](https://github.com/OlegMR0/book-store/assets/104794816/0c584ed5-0608-4876-9669-dc27101710fc)
+
+
+For testing purposes, there is a predefined admin, to log in you need to specify an accurate JWT Key in the .env file.
+   ```
+   QJQlI8dWpwcRExmLOXjVMOh4eqxTsw2LPhlKeEkh3RI=
+   ```
+Hence, you can log in within the user below.
+
+>admin@mail.com
+>
+>securePassword123
+
+## 📋API Reference
 > [!NOTE]
 > Next endpoints don't require authentication.
 
