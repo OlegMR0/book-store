@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,7 +46,8 @@ public class OrderController {
             description = "Retrieve the user's order history."
     )
     @GetMapping
-    List<OrderResponseDto> getOrders(Authentication authentication, Pageable pageable) {
+    List<OrderResponseDto> getOrders(Authentication authentication,
+                                     @ParameterObject Pageable pageable) {
         return orderService.getOrdersByUser(authentication, pageable);
     }
 

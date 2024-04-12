@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,7 +44,7 @@ public class CategoryController {
     @Operation(summary = "Get categories",
             description = "Returns all available(not deleted) categories.")
     @GetMapping
-    public List<CategoryResponseDto> getAll(Pageable pageable) {
+    public List<CategoryResponseDto> getAll(@ParameterObject Pageable pageable) {
         return categoryService.findAll(pageable);
     }
 
